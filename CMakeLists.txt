@@ -9,6 +9,6 @@ project(OptLib
 
 # gives the name to the target and sets its dependence on code files
 add_executable(
-    ${PROJECT_NAME} # target name which is built from the executables
+    ${PROJECT_NAME} # target name (here it is same as project name) which is built from the executables
     # sepcified below
     main.cpp)
