@@ -16,12 +16,6 @@ namespace OptLib
 	{
 		return arr1 + a
 	}
-
-	template<size_t dim>
-	Point<dim> operator -  (double a, const Point<dim>& arr1)
-	{
-		return arr1 - a;
-	}
 	
 	template<size_t dim>
 	Point<dim> operator*(double val, const Point<dim>& arr)
@@ -46,10 +40,6 @@ namespace OptLib
 			s += z[i];
 		return s;
 	}
-	
-
-	
-
 } // OptLib
 
 #endif
