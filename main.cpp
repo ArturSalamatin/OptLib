@@ -32,7 +32,7 @@ int main()
     std::cout << P1[0] << std::endl;
     std::cout << P1 << std::endl;
 
- //   PointVal<3> Pv1{Point<3>{{2.0, 3.0, 5.0}}, 4.0};
+    PointVal<3> Pv1{{2.0, 3.0, 5.0}, 4.0};
 
     return 0;
 }

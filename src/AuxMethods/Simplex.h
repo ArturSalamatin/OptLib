@@ -1,11 +1,25 @@
 #ifndef SIMPLEX_H
 #define SIMPLEX_H
 
+#include "Point.h"
 #include "SimplexOps.h"
 #include "SimplexSerial.h"
 
 namespace OptLib
 {
+	template<size_t dim, typename Stream>
+	Stream& operator<<(Stream& o, const Point<dim>& p)
+	{
+		static_assert(dim > 0);
+		o << "{" << p[0];
+		for(size_t i = 1; i < dim; ++i)
+		{
+			o << ", " << p[i];
+		}
+		o << "}";
+		return o;
+	}
+
 	// https://docs.microsoft.com/ru-ru/cpp/parallel/auto-parallelization-and-auto-vectorization?view=msvc-170
 	// https://www.intel.com/content/www/us/en/docs/intrinsics-guide/index.html#techs=AVX&cats=Store&ig_expand=6846,6917
 	// https://habr.com/ru/company/intel/blog/205552/

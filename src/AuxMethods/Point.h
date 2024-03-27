@@ -50,18 +50,6 @@ namespace OptLib
 		using RawPoint<dim>::value_type; 
 	};
 	
-	template<size_t dim, typename Stream>
-	Stream& operator<<(Stream& o, const Point<dim>& p)
-	{
-		static_assert(dim > 0);
-		o << "{" << p[0];
-		for(size_t i = 1; i < dim; ++i)
-		{
-			o << ", " << p[i];
-		}
-		o << "}";
-		return o;
-	}
 } // OptLib
 
 #endif
