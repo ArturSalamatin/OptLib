@@ -15,6 +15,8 @@ int main()
 
     auto result{P1+P2};
 
+    auto r{P1+5.0};
+
     std::cout << P1[0] << std::endl;
     std::cout << P1 << std::endl;
 
