@@ -4,6 +4,5 @@
 /// @return code of execution result
 int main()
 {
-    std::getchar();
     return 0;
 }
