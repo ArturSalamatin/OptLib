@@ -1,27 +1,23 @@
 #pragma once
 #include <functional>
+#include "Point.h"
 
 namespace OptLib
 {
-	/// <summary>
-	/// An alias for std::array. It is required for the ease of RawPoint construction.
-	/// </summary>
-	template<size_t dim>
-	using Point = std::array<double, dim>;
-	//template<>
-	//using Point<1> = double;
-
 	namespace SimplexOps
 	{
 		namespace UnaryOps
 		{
+			/// @brief Addition of Point-element and a fixed scalar
+			/// @tparam Scalar Value to be added to every element of Point-container
 			template <class Scalar>
-			struct plus 
+			struct plus
 			{
-				plus(Scalar value) : scalar{ value } {}
+				plus(Scalar value) : 
+					scalar{value} 
+				{}
 
-				template<class T>
-				T operator() (const T& lhs)
+				constexpr Scalar operator()(const Scalar &lhs) const
 				{
 					return lhs + scalar;
 				}
@@ -30,13 +26,16 @@ namespace OptLib
 				Scalar scalar;
 			};
 
+			/// @brief Subtraction of a fixed scalar from Point-element 
+			/// @tparam Scalar Value to be subtracted from every element of Point-container
 			template <class Scalar>
 			struct minus
 			{
-				minus(Scalar value) : scalar{ value } {}
+				minus(Scalar value) : 
+					scalar{value} 
+				{}
 
-				template<class T>
-				T operator() (const T& lhs)
+				constexpr Scalar operator()(const Scalar &lhs) const
 				{
 					return lhs - scalar;
 				}
@@ -44,14 +43,17 @@ namespace OptLib
 			protected:
 				Scalar scalar;
 			};
-			
+
+			/// @brief Multiplication of Point-element and a fixed scalar
+			/// @tparam Scalar Value to be multiplied with every element of Point-container
 			template <class Scalar>
 			struct mult
 			{
-				mult(Scalar value) : scalar{ value } {}
+				mult(Scalar value) : 
+					scalar{value} 
+				{}
 
-				template<class T>
-				T operator() (const T& lhs)
+				constexpr Scalar operator()(const Scalar &lhs) const
 				{
 					return lhs * scalar;
 				}
@@ -62,15 +64,14 @@ namespace OptLib
 
 			struct sqrt
 			{
-				template<class T>
-				T operator() (const T& lhs)
+				template <class T>
+				constexpr T operator()(const T &lhs) const
 				{
 					return std::sqrt(lhs);
 				}
 			};
-
 		}
-		
+
 		namespace BinaryOps
 		{
 			template <class T = void>
@@ -82,9 +83,8 @@ namespace OptLib
 			template <class T = void>
 			using multiplies = std::multiplies<T>;
 
-
-
-		}
-	}
-}
-
+			template <class T = void>
+			using divides = std::divides<T>;
+		} // BinaryOps
+	} // SimplexOps
+} // OptLib
