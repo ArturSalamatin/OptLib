@@ -11,12 +11,17 @@ project(OptLib
 if(MSVC AND MSVC_VERSION GREATER 1400)
     add_compile_options(/MP)
 endif()
-    
 
-
+# message(MESSAGE ${PROJECT_BINARY_DIR})
 
 # gives the name to the target and sets its dependence on code files
 add_executable(
     ${PROJECT_NAME} # target name (here it is same as project name) which is built from the executables
     # sepcified below
     main.cpp)
+
+target_compile_features(
+    ${PROJECT_NAME}
+    PRIVATE
+        cxx_auto_type
+)
