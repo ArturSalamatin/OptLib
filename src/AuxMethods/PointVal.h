@@ -3,266 +3,261 @@
 
 #include <iostream>
 #include "Point.h"
+#include "Simplex.h"
 
 namespace OptLib
 {
     /// <summary>
-	/// Point with associated Value. Essentially a {Point, Val}-pair with a comparator to sort Points
-	/// </summary>
-	template<size_t dim>
-	struct PointVal : public Point<dim>
-	{
-		double Val;
-		PointVal() = default;
-		PointVal(Point<dim>&& _P, double _Val) : RawPoint{ std::move(_P) }, Val{ _Val }{}
-		PointVal(const Point<dim>& _P, double _Val) : RawPoint{ _P }, Val{ _Val }{}
-		bool operator<(const PointVal& rhs)
-		{
-			return this->Val < rhs.Val;
-		}
-	};
-	/// elementwise addition of vector + vector
-	template<size_t dim>
-	PointVal<dim> operator+(const PointVal<dim>& arr1, const PointVal<dim>& arr2)
-	{
-		return PointVal<dim>{arr1.P + arr2.P, arr1.Val + arr2.Val};
-	}
-	/// elementwise addition of vector + value
-	PointVal<1> operator+(PointVal<1>& p, double a)
-	{
-		return PointVal<1>{p + a,p.Val};
-	}
-	/// elementwise subtraction of vector - vector
-	template<size_t dim>
-	PointVal<dim> operator-(const PointVal<dim>& arr1, const PointVal<dim>& arr2)
-	{
-		return PointVal<dim>{arr1 - arr2, arr1.Val - arr2.Val};
-	}
-	/// elementwise division vector / scalar
-	template<size_t dim>
-	PointVal<dim> operator/(PointVal<dim> arr, double val)
-	{
-		return PointVal<dim>{ arr.P / val, arr.Val / val };
-	}
-	/// elementwise multiplication of vector * vector
-	template<size_t dim>
-	PointVal<dim> operator*(const PointVal<dim>& arr1, const PointVal<dim>& arr2)
-	{
-		return PointVal<dim>{arr1.P* arr2.P, arr1.Val* arr2.Val};
-	}
-	template<size_t dim>
-	PointVal<dim> operator* (PointVal<dim> p, double val)
-	{
-		return {p.P * val, p.Val* val};
-	}
-	/// elementwise division of vector / vector
-	template<size_t dim>
-	PointVal<dim> operator/(const PointVal<dim>& arr1, const PointVal<dim>& arr2)
-	{
-		return {arr1.P/ arr2.P, arr1.Val/ arr2.Val};
-	}
+    /// @brief Point with associated Value. Essentially a {Point, Val}-pair with a comparator to sort Points
+    /// </summary>
+    template <size_t dim>
+    struct PointVal
+    {
+        Point<dim> P;
+        double Val;
+        //    PointVal() = default;
+        PointVal(PointVal&&) = default;
+        PointVal(const PointVal&) = default;
+        PointVal(Point<dim> &&P, double Val) : P{std::move(_P)}, Val{Val}
+        {
+        }
+        PointVal(const Point<dim> &P, double Val) : P{P}, Val{Val}
+        {
+        }
+    };
 
-	///  elementwise sqrt nnn
-	template<size_t dim>
-	PointVal<dim> sqrt(const PointVal<dim>& p)
-	{
-		return { sqrt<dim>(p.P), std::sqrt(p.Val) };
-	}
-	///  elementwise abs
-	template<size_t dim>
-	PointVal<dim> abs(const PointVal<dim>& p)
-	{
-		return { abs<dim>(p.P), std::abs(p.Val) };
-	}
-	/// <summary>
-	/// Distance between two points
-	/// </summary>
-	/// <param name="p1"></param>
-	/// <param name="p2"></param>
-	/// <returns></returns>
-	template <size_t dim>
-	double dist(const PointVal<dim>& p1, const PointVal<dim>& p2)
-	{
-		double res = 0.0;
-		for (size_t i = 0; i < dim; i++)
-			res += (p2[i] - p1[i]) * (p2[i] - p1[i]);
+    template <size_t dim>
+    bool operator<(const PointVal<dim> &lhs, const PointVal<dim> &rhs)
+    {
+        return lhs.Val < rhs.Val;
+    }
 
-		return std::sqrt(res);
-	}
-	template<size_t dim>
-	std::ostream& operator<<(std::ostream& o, const PointVal<dim>& r)
-	{
-		o << "{ " << r.P << ' ' << r.Val << " }"; return o;
-	}
+    template <size_t dim>
+    PointVal<dim> operator+(const PointVal<dim> &arr1, const PointVal<dim> &arr2)
+    {
+        return PointVal<dim>{arr1.P + arr2.P, arr1.Val + arr2.Val};
+    }
 
-	/// <summary>
-	/// coefficient of variation, mean/variance
-	/// </summary>
-	/// <typeparam name="point"></typeparam>
-	/// <param name="avg"></param>
-	/// <param name="disp"></param>
-	/// <returns></returns>
-	template<typename point>
-	std::pair<point, point> VarCoef(const point& avg, const point& disp)
-	{// requires sqrt(vector), abs(vector), vector/vector
-		auto disp0 = sqrt(disp);
-		return std::pair{ disp0 / abs(avg), disp0 };
-	}
+    /// elementwise subtraction of vector - vector
+    template <size_t dim>
+    PointVal<dim> operator-(const PointVal<dim> &arr1, const PointVal<dim> &arr2)
+    {
+        return PointVal<dim>{arr1.P - arr2.P, arr1.Val - arr2.Val};
+    }
+    /// elementwise division vector / scalar
+    template <size_t dim>
+    PointVal<dim> operator/(PointVal<dim> arr, double val)
+    {
+        return PointVal<dim>{arr.P / val, arr.Val / val};
+    }
+    /// elementwise multiplication of vector * vector
+    template <size_t dim>
+    PointVal<dim> operator*(const PointVal<dim> &arr1, const PointVal<dim> &arr2)
+    {
+        return PointVal<dim>{arr1.P * arr2.P, arr1.Val * arr2.Val};
+    }
+    template <size_t dim>
+    PointVal<dim> operator*(const PointVal<dim>& p, double val)
+    {
+        return {p.P * val, p.Val * val};
+    }
+    /// elementwise division of vector / vector
+    template <size_t dim>
+    PointVal<dim> operator/(const PointVal<dim> &arr1, const PointVal<dim> &arr2)
+    {
+        return {arr1.P / arr2.P, arr1.Val / arr2.Val};
+    }
 
-	template<size_t count, typename point>
-	using SetOfPoints = std::array<point, count>;
+    ///  elementwise sqrt
+    template <size_t dim>
+    PointVal<dim> sqrt(const PointVal<dim> &p)
+    {
+        return {sqrt<dim>(p.P), std::sqrt(p.Val)};
+    }
+    ///  elementwise abs
+    template <size_t dim>
+    PointVal<dim> abs(const PointVal<dim> &p)
+    {
+        return {abs<dim>(p.P), std::abs(p.Val)};
+    }
 
-	/// <summary>
-	/// A matrix*vector multiplication
-	/// </summary>
-	/// <param name="A"></param>
-	/// <param name="B"></param>
-	/// <returns></returns>
-	template<size_t dim>
-	Point<dim> operator* (const SetOfPoints<dim, Point<dim>>& A, const Point<dim>& B)
-	{
-		Point<dim> out;
-		for (size_t i = 0; i < dim; i++)
-		{
-			out[i] = dot_product(A[i], B);
-		}
-		return out;
-	}
+    template <size_t dim>
+    std::ostream &operator<<(std::ostream &o, const PointVal<dim> &r)
+    {
+        return o << "{ " << r.P << ", " << r.Val << " }";
+    }
 
-	template<size_t count, typename point>
-	std::ostream& operator<< (
-		std::ostream& o, 
-		const SetOfPoints<count, 
-		point>& output)
-	{
-		o << "{ " << output[0];
-		if constexpr (count > 1)
-		{
-			for (size_t i = 1; i < count; i++)
-				o << "; " << output[i];
-		}
-		o << " }";
+    /// <summary>
+    /// coefficient of variation, mean/variance
+    /// </summary>
+    /// <typeparam name="point"></typeparam>
+    /// <param name="avg"></param>
+    /// <param name="disp"></param>
+    /// <returns></returns>
+    template <typename point>
+    std::pair<point, point> VarCoef(const point &avg, const point &disp)
+    { // requires sqrt(vector), abs(vector), vector/vector
+        auto disp0 = sqrt(disp);
+        return std::pair{disp0 / abs(avg), disp0};
+    }
 
-		return o;
-	}
+    template <size_t count, typename point>
+    using SetOfPoints = std::array<point, count>;
 
-	/// <summary>
-	/// A set of points of type point with +-*/ operators overloaded for calculation of Mean, Disp, and VarCoef
-	/// </summary>
-	/// <typeparam name="point"></typeparam>
-	template<size_t count, typename point>
-	class RawSetOfPoints
-	{
-	protected:
-		SetOfPoints<count, point> ItsSetOfPoints;
-	public:
-		RawSetOfPoints() = default;
-		RawSetOfPoints(SetOfPoints<count, point> && _s) : ItsSetOfPoints{ std::move(_s) } { }
-		RawSetOfPoints(const SetOfPoints<count, point>& _s) : ItsSetOfPoints{ _s } { }
-		const point& operator[](size_t i) const { return Points()[i]; }
+    /// <summary>
+    /// A matrix*vector multiplication
+    /// </summary>
+    /// <param name="A"></param>
+    /// <param name="B"></param>
+    /// <returns></returns>
+    template <size_t dim>
+    Point<dim> operator*(const SetOfPoints<dim, Point<dim>> &A, const Point<dim> &B)
+    {
+        Point<dim> out;
+        for (size_t i = 0; i < dim; i++)
+        {
+            out[i] = dot_product(A[i], B);
+        }
+        return out;
+    }
 
-		const SetOfPoints<count, point>& Points() const { return ItsSetOfPoints; }
-		point Mean() const
-		{ // requires vector+vector and vector/double
-			point result{ Points()[0] };
-			for (size_t i = 1; i < count; ++i)
-				result = result + Points()[i];
-			result = result / (count + 0.0);
-			return result;
-		}
-		std::pair<point, point> Dispersion() const
-		{// requires vector+-*vector, vector/double
-			point avg{ Mean() };
-			point result = (Points()[0] - avg) * (Points()[0] - avg);
+    template <size_t count, typename point>
+    std::ostream &operator<<(
+        std::ostream &o,
+        const SetOfPoints<count,
+                          point> &output)
+    {
+        o << "{ " << output[0];
+        if constexpr (count > 1)
+        {
+            for (size_t i = 1; i < count; i++)
+                o << "; " << output[i];
+        }
+        o << " }";
 
-			for (size_t i = 1; i < count; ++i)
-				result = result + (Points()[i] - avg) * (Points()[i] - avg);
+        return o;
+    }
 
-			return { avg, result / (count + 0.0) };
-		}
+    /// <summary>
+    /// A set of points of type point with +-*/ operators overloaded for calculation of Mean, Disp, and VarCoef
+    /// </summary>
+    /// <typeparam name="point"></typeparam>
+    template <size_t count, typename point>
+    class RawSetOfPoints
+    {
+    protected:
+        SetOfPoints<count, point> ItsSetOfPoints;
 
-		operator SetOfPoints<count, point>() { return Points(); }
-	};
-	template<size_t count, typename point>
-	std::ostream& operator<< (std::ostream& o, const RawSetOfPoints<count, point>& output)
-	{
-		o << "{ " << output[0];
-		for (size_t i = 1; i < count; ++i)
-			o << "; " << output[i];
-		o << " }";
-		return o;
-	}
+    public:
+        RawSetOfPoints() = default;
+        RawSetOfPoints(SetOfPoints<count, point> &&_s) : ItsSetOfPoints{std::move(_s)} {}
+        RawSetOfPoints(const SetOfPoints<count, point> &_s) : ItsSetOfPoints{_s} {}
+        const point &operator[](size_t i) const { return Points()[i]; }
 
-	/// <summary>
-	/// Set of points with associated value. The calss makes PointVal from Point and Val
-	/// </summary>
-	/// <typeparam name="point"></typeparam>
-	/// <typeparam name="pointval"></typeparam>
-	template<size_t count, typename point, typename pointval>
-	class SetOfPointVal : public RawSetOfPoints<count, pointval>
-	{
-	public:
-		/// <summary>
-		/// assembles PointVal from Point and Val
-		/// </summary>
-		/// <param name="_s"></param>
-		/// <param name="FuncVals"></param>
-		/// <returns></returns>
-		static SetOfPoints<count, pointval> make_field(SetOfPoints<count, point>&& _s, const std::array<double, count>& FuncVals)
-		{
-			SetOfPoints<count, pointval> P;
-			for (size_t i = 0; i < count; ++i)
-				P[i] = pointval{ std::move(_s[i]), FuncVals[i] };
-			return P;
-		}
-	public:
-		SetOfPointVal() = default;
-		SetOfPointVal(SetOfPoints<count, pointval>&& _s) :
-			RawSetOfPoints<count, pointval>{ std::move(_s) } { }
-		SetOfPointVal(SetOfPoints<count, point>&& _s, const std::array<double, count>& funcVals) : // transforms points to points with vals
-			SetOfPointVal<count, point, pointval>{ make_field(std::move(_s), funcVals) } {}
-		SetOfPoints<count, point> PointsNoVal() const
-		{
-			SetOfPoints<count, point> out{};
-			for (size_t i = 0; i < count; i++)
-				out[i] = Points()[i].P;
-			return out;
-		}
-	};
+        const SetOfPoints<count, point> &Points() const { return ItsSetOfPoints; }
+        point Mean() const
+        { // requires vector+vector and vector/double
+            point result{Points()[0]};
+            for (size_t i = 1; i < count; ++i)
+                result = result + Points()[i];
+            result = result / (count + 0.0);
+            return result;
+        }
+        std::pair<point, point> Dispersion() const
+        { // requires vector+-*vector, vector/double
+            point avg{Mean()};
+            point result = (Points()[0] - avg) * (Points()[0] - avg);
 
-	/// <summary>
-	/// A set of points of type {point with Val} with +-*/ operators overloaded for calculation of Mean, Disp, and VarCoef. The points are sorted according to Val-field.
-	/// </summary>
-	/// <typeparam name="point"></typeparam>
-	template<size_t count, typename point, typename pointval>
-	class SetOfPointValsSort : public SetOfPointVal<count, point, pointval>
-	{
-	private:
-		void Sort() { std::sort(ItsSetOfPoints.begin(), ItsSetOfPoints.end()); }
+            for (size_t i = 1; i < count; ++i)
+                result = result + (Points()[i] - avg) * (Points()[i] - avg);
 
-	public:
-		SetOfPointValsSort() = default;
-		SetOfPointValsSort(SetOfPoints<count, pointval>&& _s) :
-			SetOfPointVal<count, point, pointval>{ std::move(_s) } { this->Sort(); }
-		SetOfPointValsSort(SetOfPoints<count, point>&& _s, const std::array<double, count>& funcVals) : // transforms points to points with vals
-			SetOfPointVal<count, point, pointval>{ std::move(_s), funcVals } { this->Sort(); }
-	};
+            return {avg, result / (count + 0.0)};
+        }
 
-	template<size_t dim>
-	using SimplexValNoSort = SetOfPointVal<dim + 1, Point<dim>, PointVal<dim>>;
+        operator SetOfPoints<count, point>() { return Points(); }
+    };
+    template <size_t count, typename point>
+    std::ostream &operator<<(std::ostream &o, const RawSetOfPoints<count, point> &output)
+    {
+        o << "{ " << output[0];
+        for (size_t i = 1; i < count; ++i)
+            o << "; " << output[i];
+        o << " }";
+        return o;
+    }
 
-	using Segment = SimplexValNoSort<1>;
-	
-	template<size_t dim>
-	using SimplexValSort = SetOfPointValsSort<dim + 1, Point<dim>, PointVal<dim>>;
+    /// <summary>
+    /// Set of points with associated value. The calss makes PointVal from Point and Val
+    /// </summary>
+    /// <typeparam name="point"></typeparam>
+    /// <typeparam name="pointval"></typeparam>
+    template <size_t count, typename point, typename pointval>
+    class SetOfPointVal : public RawSetOfPoints<count, pointval>
+    {
+    public:
+        /// <summary>
+        /// assembles PointVal from Point and Val
+        /// </summary>
+        /// <param name="_s"></param>
+        /// <param name="FuncVals"></param>
+        /// <returns></returns>
+        static SetOfPoints<count, pointval> make_field(SetOfPoints<count, point> &&_s, const std::array<double, count> &FuncVals)
+        {
+            SetOfPoints<count, pointval> P;
+            for (size_t i = 0; i < count; ++i)
+                P[i] = pointval{std::move(_s[i]), FuncVals[i]};
+            return P;
+        }
 
+    public:
+        SetOfPointVal() = default;
+        SetOfPointVal(SetOfPoints<count, pointval> &&_s) : RawSetOfPoints<count, pointval>{std::move(_s)} {}
+        SetOfPointVal(SetOfPoints<count, point> &&_s, const std::array<double, count> &funcVals) : // transforms points to points with vals
+                                                                                                   SetOfPointVal<count, point, pointval>{make_field(std::move(_s), funcVals)}
+        {
+        }
+        SetOfPoints<count, point> PointsNoVal() const
+        {
+            SetOfPoints<count, point> out{};
+            for (size_t i = 0; i < count; i++)
+                out[i] = Points()[i].P;
+            return out;
+        }
+    };
 
+    /// <summary>
+    /// A set of points of type {point with Val} with +-*/ operators overloaded for calculation of Mean, Disp, and VarCoef. The points are sorted according to Val-field.
+    /// </summary>
+    /// <typeparam name="point"></typeparam>
+    template <size_t count, typename point, typename pointval>
+    class SetOfPointValsSort : public SetOfPointVal<count, point, pointval>
+    {
+    private:
+        void Sort() { std::sort(ItsSetOfPoints.begin(), ItsSetOfPoints.end()); }
 
-	template<size_t dim>
-	using Grad = Point<dim>;
+    public:
+        SetOfPointValsSort() = default;
+        SetOfPointValsSort(SetOfPoints<count, pointval> &&_s) : SetOfPointVal<count, point, pointval>{std::move(_s)} { this->Sort(); }
+        SetOfPointValsSort(SetOfPoints<count, point> &&_s, const std::array<double, count> &funcVals) : // transforms points to points with vals
+                                                                                                        SetOfPointVal<count, point, pointval>{std::move(_s), funcVals}
+        {
+            this->Sort();
+        }
+    };
 
-	template<size_t dim>
-	using Hess = SetOfPoints<dim, Point<dim>>;
+    template <size_t dim>
+    using SimplexValNoSort = SetOfPointVal<dim + 1, Point<dim>, PointVal<dim>>;
+
+    using Segment = SimplexValNoSort<1>;
+
+    template <size_t dim>
+    using SimplexValSort = SetOfPointValsSort<dim + 1, Point<dim>, PointVal<dim>>;
+
+    template <size_t dim>
+    using Grad = Point<dim>;
+
+    template <size_t dim>
+    using Hess = SetOfPoints<dim, Point<dim>>;
 }
 
 #endif
