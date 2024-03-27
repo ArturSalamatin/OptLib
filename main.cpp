@@ -3,13 +3,25 @@
 
 #include "src/AuxMethods/Point.h"
 #include "src/AuxMethods/Simplex.h"
+#include "src/AuxMethods/PointVal.h"
+
+using namespace OptLib;
 
 /// @brief program entry point
 /// @return code of execution result
 int main()
 {
-    OptLib::Point<3> P1{};
-    OptLib::Point<3> P2{};
+    RawPoint<3> P0{1.0,1.0,1.0};
+    Point<3> P1{};
+    Point<3> P2{};
+    auto ar{RawPoint<3>{{1.0,1.0,1.0}}};
+
+
+
+
+    Point<3> ar2{1.0,1.0,1.0};
+
+    Point<3> P3{ar};
 
     auto it = P1.begin();
 
@@ -19,6 +31,8 @@ int main()
 
     std::cout << P1[0] << std::endl;
     std::cout << P1 << std::endl;
+
+ //   PointVal<3> Pv1{Point<3>{{2.0, 3.0, 5.0}}, 4.0};
 
     return 0;
 }
