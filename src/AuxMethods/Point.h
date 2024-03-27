@@ -12,11 +12,11 @@ namespace OptLib
 	using RawPoint = std::array<double, dim>;
 
 	template <size_t dim>
-	class Point : private RawPoint<dim>
+	struct Point : private RawPoint<dim>
 	{
 	public:
 		using RawPoint<dim>::operator[];
-		//	using RawPoint<dim>::RawPoint;
+		using RawPoint<dim>::RawPoint;
 		using RawPoint<dim>::size;
 		using RawPoint<dim>::begin;
 		using RawPoint<dim>::end;
@@ -34,7 +34,7 @@ namespace OptLib
 		{
 			o << ", " << p[i];
 		}
-		o << "}\n";
+		o << "}";
 		return o;
 	}
 } // OptLib

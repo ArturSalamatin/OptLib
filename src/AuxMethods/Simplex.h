@@ -34,12 +34,27 @@ namespace OptLib
 	double dot_product(const Point<dim>& x, const Point<dim>& y)
 	{
 		auto z = x * y;
-
-		double s = 0;
-		for (size_t i = 0; i < dim; ++i)
-			s += z[i];
-		return s;
+		return std::accumulate(z.begin(), z.end(), 0.0);
 	}
+	
+    template <size_t dim>
+    double norm(const Point<dim> &p)
+    {
+        return std::sqrt(dot_product(p,p));
+    }
+
+    /// <summary>
+    /// Distance between two points
+    /// </summary>
+    /// <param name="p1"></param>
+    /// <param name="p2"></param>
+    /// <returns></returns>
+    template <size_t dim>
+    double dist(const Point<dim> &p1, const Point<dim> &p2)
+    {
+        return norm(p1-p2);
+    }
+
 } // OptLib
 
 #endif
