@@ -25,3 +25,8 @@ target_compile_features(
     PRIVATE
         cxx_auto_type
 )
+
+set_property(
+    TARGET ${PROJECT_NAME} 
+    PROPERTY CXX_STANDARD 17
+)
