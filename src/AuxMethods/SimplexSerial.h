@@ -39,7 +39,9 @@ namespace OptLib
 	template<size_t dim>
 	auto& operator += (Point<dim>& p, double a)
 	{
-		std::transform(p.begin(), p.end(), p.begin(), SimplexOps::UnaryOps::plus<double>{a});
+		std::transform(
+			p.begin(), p.end(), p.begin(), 
+			SimplexOps::UnaryOps::plus<double>{a});
 		return p;
 	}
 #pragma endregion
@@ -51,7 +53,8 @@ namespace OptLib
 		Point<dim> result; 
 		std::transform(
 			arr1.begin(), arr1.end(), arr2.begin(), result.begin(), 
-			SimplexOps::BinaryOps::minus<double>{});
+			SimplexOps::BinaryOps::minus<double>{}
+		);
 		return result;  
 	}
 	template<size_t dim>
@@ -61,13 +64,17 @@ namespace OptLib
 		std::transform(
 			arr1.begin(), arr1.end(), 
 			result.begin(), 
-			SimplexOps::UnaryOps::minus<double>{a });
+			SimplexOps::UnaryOps::minus<double>{ a }
+		);
 		return result;
 	}
 	template<size_t dim>
 	auto& operator -= (Point<dim>& p, double a)
 	{
-		std::transform(p.begin(), p.end(), p.begin(), SimplexOps::UnaryOps::minus<double>{a});
+		std::transform(
+			p.begin(), p.end(), p.begin(), 
+			SimplexOps::UnaryOps::minus<double>{a}
+		);
 		return p;
 	}
 #pragma endregion
@@ -79,7 +86,8 @@ namespace OptLib
 		Point<dim> result;
 		std::transform(
 			arr1.begin(), arr1.end(), arr2.begin(), result.begin(),
-			SimplexOps::BinaryOps::multiplies<>{});
+			SimplexOps::BinaryOps::multiplies<>{}
+			);
 		return result;
 	}
 	template<size_t dim>
@@ -109,7 +117,8 @@ namespace OptLib
 	{
 		Point<dim> result;
 		std::transform(
-			arr1.begin(), arr1.end(), arr2.begin(), result.begin(), 
+			arr1.begin(), arr1.end(), 
+			arr2.begin(), result.begin(), 
 			SimplexOps::BinaryOps::divides<double>{ });
 		return result;
 	}
@@ -130,7 +139,11 @@ namespace OptLib
 	{
 		Point<dim> result;
 		double res{0.0};
-		std::transform(arr1.begin(), arr1.end(), arr1.begin(), result.begin(), std::multiplies<>{});
+		std::transform(
+			arr1.begin(), arr1.end(), 
+			arr1.begin(), result.begin(), 
+			std::multiplies<>{}
+		);
 		for (const auto& el : result)
 			res += el;
 		return std::sqrt(res);
@@ -142,7 +155,8 @@ namespace OptLib
 		Point<dim> result;
 		std::transform(
 			arr1.begin(), arr1.end(), result.begin(), 
-			SimplexOps::UnaryOps::sqrt());
+			SimplexOps::UnaryOps::sqrt()
+		);
 		return result;
 	}
 #pragma endregion
