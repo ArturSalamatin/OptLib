@@ -2,9 +2,10 @@
 #define POINTOPERATORS_H
 
 #include <numeric>
+
 #include "Point.h"
 #include "PointOperatorsImpl.h"
-#include "SimplexSerial.h"
+#include "PointOperatorsSerial.h"
 
 namespace OptLib
 {

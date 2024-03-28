@@ -1,5 +1,5 @@
-#ifndef SIMPLEXSERIAL_H
-#define SIMPLEXSERIAL_H
+#ifndef POINTOPERATORSSERIAL_H
+#define POINTOPERATORSSERIAL_H
 
 #include <functional>
 #include <algorithm>
