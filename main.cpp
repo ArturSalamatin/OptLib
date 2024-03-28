@@ -11,6 +11,8 @@ using namespace OptLib;
 /// @return code of execution result
 int main()
 {
+
+    // testing Point ctors
     auto rp1{Point<3>{1.0, 2.0, 3.0}};
     auto rp2 = rp1;
     auto rp3 = Point<3>{1.0, 2.0, 3.0};
@@ -18,33 +20,30 @@ int main()
     auto rp5 = std::move(rp4);
     Point<3> rp6{2.0, 1.0, 3.0};
 
+    // testing Point operators
+    std::cout << rp6 << std::endl;
+    rp6 += 3.0;
+    rp6 -= 3.0;
+    rp6 *= 2.5;
+    rp6 /= 2.5;
+
+    auto rp7{rp6 + 1.0};
+    auto rp8{rp6 - 1.0};
+    auto rp9 = rp6 * 2.0;
+    auto rp91 = 2.0 * rp6;
+    auto rp10 = rp6 / 2.0;
+    auto rp11 = abs(rp6);
+    auto rp12 = sqrt(rp6);
+    auto rp13 = rp6 / 2.0;
+    auto rp14 = rp6 / 2.0;
+    auto rp15{1.0+rp6};
+    auto rp16{1.0-rp6};
+
+    auto dp{dot_product(rp7,rp8)};
+    auto dp{norm(rp7)};
+    auto dp{dist(rp7,rp8)};
 
 
-
-
-
-    RawPoint<3> P0{1.0,1.0,1.0};
-    Point<3> P1{};
-    Point<3> P2{};
-    auto ar{RawPoint<3>{{1.0,1.0,1.0}}};
-
-
-
-
-    Point<3> ar2{1.0,1.0,1.0};
-
-    Point<3> P3{ar};
-
-    auto it = P1.begin();
-
-    auto result{P1+P2};
-
-    auto r{P1+5.0};
-
-    std::cout << P1[0] << std::endl;
-    std::cout << P1 << std::endl;
-
-    PointVal<3> Pv1{{2.0, 3.0, 5.0}, 4.0};
 
     return 0;
 }

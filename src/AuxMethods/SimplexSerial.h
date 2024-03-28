@@ -35,6 +35,12 @@ namespace OptLib
 			SimplexOps::UnaryOps::plus<double>{a });
 		return result;  
 	}
+	template<size_t dim>
+	Point<dim>& operator += (Point<dim>& p, double a)
+	{
+		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::plus<double>{a});
+		return p;
+	}
 #pragma endregion
 
 #pragma region SUBTRACT
@@ -56,6 +62,12 @@ namespace OptLib
 			result.begin(), 
 			SimplexOps::UnaryOps::minus<double>{a });
 		return result;
+	}
+	template<size_t dim>
+	Point<dim>& operator -= (Point<dim>& p, double a)
+	{
+		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::minus<double>{a});
+		return p;
 	}
 #pragma endregion
 
@@ -79,6 +91,12 @@ namespace OptLib
 
 		return result;
 	}
+	template<size_t dim>
+	Point<dim>& operator *= (Point<dim>& p, double a)
+	{
+		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::mult<double>{a});
+		return p;
+	}
 #pragma endregion
 
 #pragma region DIVIDE
@@ -90,6 +108,12 @@ namespace OptLib
 			arr1.begin(), arr1.end(), arr2.begin(), result.begin(), 
 			SimplexOps::BinaryOps::divides<double>{ });
 		return result;
+	}
+	template<size_t dim>
+	Point<dim>& operator /= (Point<dim>& p, double a)
+	{
+		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::mult<double>{1.0/a});
+		return p;
 	}
 #pragma endregion
 
