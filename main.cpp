@@ -2,7 +2,7 @@
 #include <array>
 
 #include "src/AuxMethods/Point.h"
-#include "src/AuxMethods/Simplex.h"
+#include "src/AuxMethods/PointOperators.h"
 #include "src/AuxMethods/PointVal.h"
 
 using namespace OptLib;
