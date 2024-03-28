@@ -23,7 +23,7 @@ namespace OptLib
 			arr1.begin(), arr1.end(), 
 			arr2.begin(), 
 			result.begin(), 
-			SimplexOps::BinaryOps::plus<double>{});
+			PointOps::BinaryOps::plus<double>{});
 		return result;  
 	}
 	template<size_t dim>
@@ -33,7 +33,7 @@ namespace OptLib
 		std::transform(
 			arr1.begin(), arr1.end(),
 			result.begin(), 
-			SimplexOps::UnaryOps::plus<double>{a });
+			PointOps::UnaryOps::plus<double>{a });
 		return result;  
 	}
 	template<size_t dim>
@@ -41,7 +41,7 @@ namespace OptLib
 	{
 		std::transform(
 			p.begin(), p.end(), p.begin(), 
-			SimplexOps::UnaryOps::plus<double>{a});
+			PointOps::UnaryOps::plus<double>{a});
 		return p;
 	}
 #pragma endregion
@@ -53,7 +53,7 @@ namespace OptLib
 		Point<dim> result; 
 		std::transform(
 			arr1.begin(), arr1.end(), arr2.begin(), result.begin(), 
-			SimplexOps::BinaryOps::minus<double>{}
+			PointOps::BinaryOps::minus<double>{}
 		);
 		return result;  
 	}
@@ -64,7 +64,7 @@ namespace OptLib
 		std::transform(
 			arr1.begin(), arr1.end(), 
 			result.begin(), 
-			SimplexOps::UnaryOps::minus<double>{ a }
+			PointOps::UnaryOps::minus<double>{ a }
 		);
 		return result;
 	}
@@ -73,7 +73,7 @@ namespace OptLib
 	{
 		std::transform(
 			p.begin(), p.end(), p.begin(), 
-			SimplexOps::UnaryOps::minus<double>{a}
+			PointOps::UnaryOps::minus<double>{a}
 		);
 		return p;
 	}
@@ -86,7 +86,7 @@ namespace OptLib
 		Point<dim> result;
 		std::transform(
 			arr1.begin(), arr1.end(), arr2.begin(), result.begin(),
-			SimplexOps::BinaryOps::multiplies<>{}
+			PointOps::BinaryOps::multiplies<>{}
 			);
 		return result;
 	}
@@ -96,7 +96,7 @@ namespace OptLib
 		Point<dim> result;
 		std::transform(
 			p.begin(), p.end(), result.begin(), 
-			SimplexOps::UnaryOps::multiplies<double>{ a }
+			PointOps::UnaryOps::multiplies<double>{ a }
 		);
 		return result;
 	}
@@ -105,7 +105,7 @@ namespace OptLib
 	{
 		std::transform(
 			p.begin(), p.end(), p.begin(), 
-			SimplexOps::UnaryOps::multiplies<double>{a}
+			PointOps::UnaryOps::multiplies<double>{a}
 		);
 		return p;
 	}
@@ -119,7 +119,7 @@ namespace OptLib
 		std::transform(
 			arr1.begin(), arr1.end(), 
 			arr2.begin(), result.begin(), 
-			SimplexOps::BinaryOps::divides<double>{ });
+			PointOps::BinaryOps::divides<double>{ });
 		return result;
 	}
 	template<size_t dim>
@@ -127,7 +127,7 @@ namespace OptLib
 	{
 		std::transform(
 			p.begin(), p.end(), p.begin(), 
-			SimplexOps::UnaryOps::multiplies<double>{1.0/a}
+			PointOps::UnaryOps::multiplies<double>{1.0/a}
 		);
 		return p;
 	}
@@ -155,7 +155,7 @@ namespace OptLib
 		Point<dim> result;
 		std::transform(
 			arr1.begin(), arr1.end(), result.begin(), 
-			SimplexOps::UnaryOps::sqrt()
+			PointOps::UnaryOps::sqrt()
 		);
 		return result;
 	}

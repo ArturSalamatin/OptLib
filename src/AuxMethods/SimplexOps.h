@@ -1,10 +1,9 @@
 #pragma once
 #include <functional>
-#include "Point.h"
 
 namespace OptLib
 {
-	namespace SimplexOps
+	namespace PointOps
 	{
 		namespace UnaryOps
 		{
