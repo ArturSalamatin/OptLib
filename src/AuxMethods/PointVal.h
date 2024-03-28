@@ -2,7 +2,6 @@
 #define POINTVAL_H
 
 #include "Point/Point.h"
-#include "Point/PointOperators.h"
 
 namespace OptLib
 {
@@ -18,10 +17,13 @@ namespace OptLib
 
         PointVal() = default;
         PointVal(const PointVal&) = default;
+        PointVal(PointVal&&) noexcept = default;
+
         template<typename T>
         PointVal(T&&P, double Val) : P{std::forward<T>(P)}, Val{Val}
         {
         }
+        
         PointVal(const Point<dim> &P, double Val) : P{P}, Val{Val}
         {
         }

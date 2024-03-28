@@ -5,9 +5,12 @@
 #include <cassert>
 
 #include "PointVal.h"
+#include "Point/PointOperators.h"
 
 namespace OptLib
 {
+
+
     template <size_t dim, typename Stream>
     auto& operator<<(Stream &o, const PointVal<dim> &r)
     {
@@ -50,7 +53,7 @@ namespace OptLib
         assert(rhs.Val != 0);
         assert(
             std::none_of(
-                rhs.begin(), rhs.end(), 
+                rhs.P.cbegin(), rhs.P.cend(), 
                 [](double x) 
                 {
                     return x != 0.0;
@@ -72,15 +75,16 @@ namespace OptLib
     auto sqrt(const PointVal<dim> &p)
     {
         assert(p.Val > 0.0);
-        assert(
+         assert(
             std::none_of(
-                p.begin(), p.end(), 
+                p.P.cbegin(), 
+                p.P.cend(), 
                 [](double x) 
                 {
                     return x < 0.0;
                 }
             )
-        );
+        ); 
         return PointVal<dim>{sqrt<dim>(p.P), std::sqrt(p.Val)};
     }
     ///  elementwise abs
@@ -98,9 +102,9 @@ namespace OptLib
     /// <param name="disp"></param>
     /// <returns></returns>
     template <typename point>
-    auto VarCoef(const point &avg, const point &disp)
+    auto var_coef(const point &avg, const point &disp)
     { // requires sqrt(vector), abs(vector), vector/vector
-        auto disp0 = sqrt(disp);
+        auto disp0{sqrt(disp)};
         return std::pair{disp0 / abs(avg), disp0};
     }
 } // OptLib

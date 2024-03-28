@@ -17,7 +17,7 @@ namespace OptLib
 		Point() = default;
 
 		template<typename T>
-		Point(T&& p) :
+		Point(T&& p) noexcept :
 			RawPoint<dim>{std::forward<T>(p)}
 		{}
 
@@ -32,7 +32,10 @@ namespace OptLib
 		using RawPoint<dim>::size;
 		using RawPoint<dim>::begin;
 		using RawPoint<dim>::end;
+		using RawPoint<dim>::cbegin;
+		using RawPoint<dim>::cend;
 		using RawPoint<dim>::iterator;
+		using RawPoint<dim>::const_iterator;
 		using RawPoint<dim>::reverse_iterator;
 		using RawPoint<dim>::value_type; 
 	};

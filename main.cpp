@@ -4,6 +4,7 @@
 #include "src/AuxMethods/Point/Point.h"
 #include "src/AuxMethods/Point/PointOperators.h"
 #include "src/AuxMethods/PointVal.h"
+#include "src/AuxMethods/PointValOperators.h"
 
 using namespace OptLib;
 
@@ -11,7 +12,6 @@ using namespace OptLib;
 /// @return code of execution result
 int main()
 {
-
     // testing Point ctors
     auto rp1{Point<3>{1.0, 2.0, 3.0}};
     auto rp2 = rp1;
@@ -44,6 +44,17 @@ int main()
     auto dp3{dist(rp7,rp8)};
 
 
+    // testting PointVal ctors
+    auto pv1{PointVal<3>{rp16, 1.0}};
+    auto pv2{pv1};
+
+    // testing PointVal operators
+    auto pv3{pv1+pv2};
+    std::cout << pv3 << std::endl;
+
+    auto pv4{sqrt(pv1)};
+
+    auto pv5{pv3/pv4};
 
     return 0;
 }
