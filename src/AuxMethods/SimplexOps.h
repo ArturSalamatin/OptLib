@@ -47,9 +47,9 @@ namespace OptLib
 			/// @brief Multiplication of Point-element and a fixed scalar
 			/// @tparam Scalar Value to be multiplied with every element of Point-container
 			template <class Scalar>
-			struct mult
+			struct multiplies
 			{
-				mult(Scalar value) : 
+				multiplies(Scalar value) : 
 					scalar{value} 
 				{}
 

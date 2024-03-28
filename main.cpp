@@ -39,9 +39,9 @@ int main()
     auto rp15{1.0+rp6};
     auto rp16{1.0-rp6};
 
-    auto dp{dot_product(rp7,rp8)};
-    auto dp{norm(rp7)};
-    auto dp{dist(rp7,rp8)};
+    auto dp1{dot_product(rp7,rp8)};
+    auto dp2{norm(rp7)};
+    auto dp3{dist(rp7,rp8)};
 
 
 

@@ -2,6 +2,7 @@
 #include <functional>
 #include <algorithm>
 #include <array>
+#include <cmath>
 
 #include "Point.h"
 #include "SimplexOps.h"
@@ -15,7 +16,7 @@ namespace OptLib
 	/// @param arr2 rhs argument
 	/// @return 
 	template<size_t dim>
-	Point<dim> operator + (const Point<dim>& arr1, const Point<dim>& arr2)
+	auto operator + (const Point<dim>& arr1, const Point<dim>& arr2)
 	{
 		Point<dim> result; 
 		std::transform(
@@ -26,7 +27,7 @@ namespace OptLib
 		return result;  
 	}
 	template<size_t dim>
-	Point<dim> operator + (const Point<dim>& arr1, double a)
+	auto operator + (const Point<dim>& arr1, double a)
 	{
 		Point<dim> result; 
 		std::transform(
@@ -36,16 +37,16 @@ namespace OptLib
 		return result;  
 	}
 	template<size_t dim>
-	Point<dim>& operator += (Point<dim>& p, double a)
+	auto& operator += (Point<dim>& p, double a)
 	{
-		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::plus<double>{a});
+		std::transform(p.begin(), p.end(), p.begin(), SimplexOps::UnaryOps::plus<double>{a});
 		return p;
 	}
 #pragma endregion
 
 #pragma region SUBTRACT
 	template<size_t dim>
-	Point<dim> operator - (const Point<dim>& arr1, const Point<dim>& arr2)
+	auto operator - (const Point<dim>& arr1, const Point<dim>& arr2)
 	{
 		Point<dim> result; 
 		std::transform(
@@ -54,7 +55,7 @@ namespace OptLib
 		return result;  
 	}
 	template<size_t dim>
-	Point<dim> operator - (const Point<dim>& arr1, double a)
+	auto operator - (const Point<dim>& arr1, double a)
 	{
 		Point<dim> result;
 		std::transform(
@@ -64,16 +65,16 @@ namespace OptLib
 		return result;
 	}
 	template<size_t dim>
-	Point<dim>& operator -= (Point<dim>& p, double a)
+	auto& operator -= (Point<dim>& p, double a)
 	{
-		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::minus<double>{a});
+		std::transform(p.begin(), p.end(), p.begin(), SimplexOps::UnaryOps::minus<double>{a});
 		return p;
 	}
 #pragma endregion
 
 #pragma region MULTIPLY
 	template<size_t dim>
-	Point<dim> operator* (const Point<dim>& arr1, const Point<dim>& arr2)
+	auto operator* (const Point<dim>& arr1, const Point<dim>& arr2)
 	{
 		Point<dim> result;
 		std::transform(
@@ -82,26 +83,29 @@ namespace OptLib
 		return result;
 	}
 	template<size_t dim>
-	double operator* (const Point<dim>& arr1, double consta)
+	auto operator* (const Point<dim>& p, double a)
 	{
 		Point<dim> result;
 		std::transform(
-			arr1.begin(), arr1.end(), result.begin(), 
-			SimplexOps::UnaryOps:multiplies<double>{consta });
-
+			p.begin(), p.end(), result.begin(), 
+			SimplexOps::UnaryOps::multiplies<double>{ a }
+		);
 		return result;
 	}
 	template<size_t dim>
-	Point<dim>& operator *= (Point<dim>& p, double a)
+	auto& operator *= (Point<dim>& p, double a)
 	{
-		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::mult<double>{a});
+		std::transform(
+			p.begin(), p.end(), p.begin(), 
+			SimplexOps::UnaryOps::multiplies<double>{a}
+		);
 		return p;
 	}
 #pragma endregion
 
 #pragma region DIVIDE
 	template<size_t dim>
-	Point<dim> operator/ (const Point<dim>& arr1, const Point<dim>& arr2)
+	auto operator/ (const Point<dim>& arr1, const Point<dim>& arr2)
 	{
 		Point<dim> result;
 		std::transform(
@@ -110,31 +114,34 @@ namespace OptLib
 		return result;
 	}
 	template<size_t dim>
-	Point<dim>& operator /= (Point<dim>& p, double a)
+	auto& operator /= (Point<dim>& p, double a)
 	{
-		std::transform(p.begin(), p.end(), SimplexOps::UnaryOps::mult<double>{1.0/a});
+		std::transform(
+			p.begin(), p.end(), p.begin(), 
+			SimplexOps::UnaryOps::multiplies<double>{1.0/a}
+		);
 		return p;
 	}
 #pragma endregion
 
 #pragma region MISC METHODS
 	template<size_t dim>
-	double abs(const Point<dim>& arr1)
+	auto abs(const Point<dim>& arr1)
 	{
 		Point<dim> result;
-		double res = 0;
+		double res{0.0};
 		std::transform(arr1.begin(), arr1.end(), arr1.begin(), result.begin(), std::multiplies<>{});
-		for (auto& el : result)
+		for (const auto& el : result)
 			res += el;
-		return sqrt(res);
+		return std::sqrt(res);
 	}
 	
 	template<size_t dim>
-	Point<dim> sqrt (const Point<dim>& arr1)
+	auto sqrt (const Point<dim>& arr1)
 	{
 		Point<dim> result;
 		std::transform(
-			arr1.begin(), arr1.end(), arr2.begin(), result.begin(),
+			arr1.begin(), arr1.end(), result.begin(), 
 			SimplexOps::UnaryOps::sqrt());
 		return result;
 	}

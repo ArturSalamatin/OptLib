@@ -1,6 +1,7 @@
-#ifndef SIMPLEX_H
-#define SIMPLEX_H
+#ifndef POINTOPERATORS_H
+#define POINTOPERATORS_H
 
+#include <numeric>
 #include "Point.h"
 #include "SimplexOps.h"
 #include "SimplexSerial.h"
@@ -8,7 +9,7 @@
 namespace OptLib
 {
 	template<size_t dim, typename Stream>
-	Stream& operator<<(Stream& o, const Point<dim>& p)
+	auto& operator<<(Stream& o, const Point<dim>& p)
 	{
 		static_assert(dim > 0);
 		o << "{" << p[0];
@@ -26,38 +27,38 @@ namespace OptLib
 	// https://chryswoods.com/vector_c++/immintrin.html
 
 	template<size_t dim>
-	Point<dim> operator + (double a, const Point<dim>& arr1)
+	auto operator + (double a, const Point<dim>& arr1)
 	{
-		return arr1 + a
+		return arr1 + a;
 	}
 	template<size_t dim>
-	Point<dim> operator - (double a, const Point<dim>& arr1)
+	auto operator - (double a, const Point<dim>& arr1)
 	{
 		return a + (-1.0) * arr1;
 	}
 		
 	template<size_t dim>
-	Point<dim> operator*(double val, const Point<dim>& arr)
+	auto operator*(double val, const Point<dim>& arr)
 	{
 		return arr * val;
 	}
 
 	template<size_t dim>
-	double operator/ (const Point<dim>& arr1, double a)
+	auto operator/ (const Point<dim>& arr1, double a)
 	{
 		return arr1 * (1.0 / a);
 	}
 	
 	/// scalar product of two vectors
 	template <size_t dim>
-	double dot_product(const Point<dim>& x, const Point<dim>& y)
+	auto dot_product(const Point<dim>& x, const Point<dim>& y)
 	{
 		auto z = x * y;
 		return std::accumulate(z.begin(), z.end(), 0.0);
 	}
 	
     template <size_t dim>
-    double norm(const Point<dim> &p)
+    auto norm(const Point<dim> &p)
     {
         return std::sqrt(dot_product(p,p));
     }
@@ -68,7 +69,7 @@ namespace OptLib
     /// @param p2 Second point
     /// @return Distance between two points
     template <size_t dim>
-    double dist(const Point<dim> &p1, const Point<dim> &p2)
+    auto dist(const Point<dim> &p1, const Point<dim> &p2)
     {
         return norm(p1-p2);
     }
