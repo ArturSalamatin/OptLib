@@ -2,7 +2,7 @@
 #define SETOFPOINTS_H
 
 #include <tuple>
-#include "Point.h"
+#include "Point/Point.h"
 
 namespace OptLib
 {

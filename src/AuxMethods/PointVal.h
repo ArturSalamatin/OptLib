@@ -2,8 +2,9 @@
 #define POINTVAL_H
 
 #include <iostream>
-#include "Point.h"
-#include "PointOperators.h"
+
+#include "Point/Point.h"
+#include "Point/PointOperators.h"
 
 namespace OptLib
 {
