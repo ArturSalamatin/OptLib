@@ -26,19 +26,6 @@ namespace OptLib
 			RawPoint<dim>{a...}
 		{}
 
-    	/* Point(std::initializer_list<double> lp) :
-			RawPoint<dim>{lp} 
-		{} */
-
-		/* template<typename T>
-		Point(T p) :
-			RawPoint<dim>{p}
-		{} */
-		
-		/* Point(const RawPoint<dim>& p) :
-			RawPoint<dim>{p}
-		{} */
-
 	 public:
 		using RawPoint<dim>::RawPoint;
 		using RawPoint<dim>::operator[];

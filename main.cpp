@@ -11,6 +11,18 @@ using namespace OptLib;
 /// @return code of execution result
 int main()
 {
+    auto rp1{Point<3>{1.0, 2.0, 3.0}};
+    auto rp2 = rp1;
+    auto rp3 = Point<3>{1.0, 2.0, 3.0};
+    auto rp4{std::move(rp2)};
+    auto rp5 = std::move(rp4);
+    Point<3> rp6{2.0, 1.0, 3.0};
+
+
+
+
+
+
     RawPoint<3> P0{1.0,1.0,1.0};
     Point<3> P1{};
     Point<3> P2{};
