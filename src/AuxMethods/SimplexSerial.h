@@ -5,7 +5,7 @@
 #include <cmath>
 
 #include "Point.h"
-#include "SimplexOps.h"
+#include "PointOperatorsImpl.h"
 
 namespace OptLib
 {

@@ -3,7 +3,7 @@
 
 #include <numeric>
 #include "Point.h"
-#include "SimplexOps.h"
+#include "PointOperatorsImpl.h"
 #include "SimplexSerial.h"
 
 namespace OptLib
