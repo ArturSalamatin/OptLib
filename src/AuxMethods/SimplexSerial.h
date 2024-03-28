@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SIMPLEXSERIAL_H
+#define SIMPLEXSERIAL_H
+
 #include <functional>
 #include <algorithm>
 #include <array>
@@ -163,3 +165,4 @@ namespace OptLib
 
 }
 
+#endif
