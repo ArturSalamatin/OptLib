@@ -62,12 +62,11 @@ namespace OptLib
         return std::sqrt(dot_product(p,p));
     }
 
-    /// <summary>
-    /// Distance between two points
-    /// </summary>
-    /// <param name="p1"></param>
-    /// <param name="p2"></param>
-    /// <returns></returns>
+    /// @brief Distance between two points
+    /// @tparam dim Dimensionality of space of function arguments
+    /// @param p1 First point
+    /// @param p2 Second point
+    /// @return Distance between two points
     template <size_t dim>
     double dist(const Point<dim> &p1, const Point<dim> &p2)
     {
