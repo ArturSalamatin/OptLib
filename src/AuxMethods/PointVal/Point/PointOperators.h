@@ -4,7 +4,6 @@
 #include <numeric>
 
 #include "Point.h"
-#include "PointOperatorsImpl.h"
 #include "PointOperatorsSerial.h"
 
 namespace OptLib

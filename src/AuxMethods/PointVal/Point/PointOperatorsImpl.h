@@ -1,5 +1,6 @@
 #ifndef POINTOPERATORSIMPL_H
 #define POINTOPERATORSIMPL_H
+
 #include <functional>
 
 namespace OptLib

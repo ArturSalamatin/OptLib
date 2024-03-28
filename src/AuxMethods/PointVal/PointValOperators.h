@@ -9,8 +9,6 @@
 
 namespace OptLib
 {
-
-
     template <size_t dim, typename Stream>
     auto& operator<<(Stream &o, const PointVal<dim> &r)
     {

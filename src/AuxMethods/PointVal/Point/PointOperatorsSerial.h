@@ -3,7 +3,6 @@
 
 #include <functional>
 #include <algorithm>
-#include <array>
 #include <cmath>
 
 #include "Point.h"

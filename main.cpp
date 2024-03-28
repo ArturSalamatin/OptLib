@@ -1,10 +1,14 @@
 #include <iostream>
 #include <array>
+#include <functional>
 
 #include "src/AuxMethods/PointVal/Point/Point.h"
 #include "src/AuxMethods/PointVal/Point/PointOperators.h"
+
 #include "src/AuxMethods/PointVal/PointVal.h"
 #include "src/AuxMethods/PointVal/PointValOperators.h"
+
+#include "src/AuxMethods/SetOfPoints.h"
 
 using namespace OptLib;
 
@@ -55,6 +59,30 @@ int main()
     auto pv4{sqrt(pv1)};
 
     auto pv5{pv3/pv4};
+
+
+    // testing SetOfPoints ctors
+    auto sp1{
+        SetOfPoints<2, Point<3>>{
+            Point<3>{1.0, 2.0, 3.0},
+            Point<3>{3.0, 2.0, 1.0}
+        }
+    };
+
+    auto res = (*sp1.begin()) + (*(sp1.end()-1));
+
+    auto pp{Point<3>{}};
+
+    auto out = std::accumulate(
+                    sp1.begin(), sp1.end(), pp,
+                    [](const auto& lhs, const auto& rhs)
+                    {
+                        return lhs + rhs;
+                    }
+                );
+
+    auto mean1{sp1.mean()};
+    auto [mean2, disp2] =  sp1.dispersion();
 
     return 0;
 }
