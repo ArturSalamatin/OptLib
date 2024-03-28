@@ -1,10 +1,10 @@
 #include <iostream>
 #include <array>
 
-#include "src/AuxMethods/Point/Point.h"
-#include "src/AuxMethods/Point/PointOperators.h"
-#include "src/AuxMethods/PointVal.h"
-#include "src/AuxMethods/PointValOperators.h"
+#include "src/AuxMethods/PointVal/Point/Point.h"
+#include "src/AuxMethods/PointVal/Point/PointOperators.h"
+#include "src/AuxMethods/PointVal/PointVal.h"
+#include "src/AuxMethods/PointVal/PointValOperators.h"
 
 using namespace OptLib;
 
