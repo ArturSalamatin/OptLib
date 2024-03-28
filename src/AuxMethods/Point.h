@@ -7,7 +7,7 @@ namespace OptLib
 {
 	/// @brief Container for scalar function arguments. Static,
 	/// compile-time allocation is assumed.
-	/// @tparam dim Dimensionality of space
+	/// @tparam dim Dimensionality of space of function arguments
 	template <size_t dim>
 	using RawPoint = std::array<double, dim>;
 
