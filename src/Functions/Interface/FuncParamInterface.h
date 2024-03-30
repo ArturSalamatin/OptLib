@@ -1,5 +1,9 @@
-#pragma once
-#include "stdafx.h"
+#ifndef FUNCPARAMINTERFACE_H
+#define FUNCPARAMINTERFACE_H
+
+#include <array>
+#include "../../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../../Points/SetOfPoints/SetOfPoints.h"
 
 namespace OptLib
 {
@@ -18,8 +22,8 @@ namespace OptLib
 			Point<count> operator() (const SetOfPoints<count, Point<dimX>>& x, const Point<dimP>& a) const
 			{
 				std::array<Point<count>::value_type, count> out;
-				for (int i = 0; i < count; i++)
-					out[i] = this->operator()(x[i], a);
+				for (size_t i = 0; i < count; ++i)
+					out[i] = (*this))(x[i], a);
 				return out;
 			}
 		};
@@ -32,3 +36,5 @@ namespace OptLib
 		};
 	} // FuncParamInterface
 } // OptLib
+
+#endif

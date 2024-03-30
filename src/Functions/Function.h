@@ -1,5 +1,11 @@
-#pragma once
-#include "stdafx.h"
+#ifndef FUNCTION_H
+#define FUNCTION_H
+
+
+#include "../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../Points/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "../Points/SetOfPoints/SetOfPoints.h"
+#include "Interface/FuncInterface.h"
 
 namespace OptLib
 {
@@ -12,9 +18,9 @@ namespace OptLib
 		class Paraboloid : public FuncInterface::IFuncWithHess<dim>
 		{
 		protected:
-			SetOfPoints<dim, Point<dim>> hessian, coef_matrix;
+			FuncInterface::Hess<dim>> hessian, coef_matrix;
 		public:
-			Paraboloid(const SetOfPoints<dim, Point<dim>> coefs) : hessian{ coefs }, coef_matrix{coefs}
+			Paraboloid(const Hess<dim>> coefs) : hessian{ coefs }, coef_matrix{coefs}
 			{
 				// transform coefficientts to hessian symmetric matrix
 				// make the hessian matrix symmetric
@@ -45,7 +51,7 @@ namespace OptLib
 
 			virtual double operator()(const Point<dim>& x) const override
 			{
-				double result = 0.0;
+				double result{0.0};
 				for (size_t i = 0; i < dim; ++i)
 				{
 					result += hessian[i][i] / 2.0 * x[i] * x[i];
@@ -269,3 +275,5 @@ namespace OptLib
 
 	} // ConcreteFuncs
 } // OptLib
+
+#endif
