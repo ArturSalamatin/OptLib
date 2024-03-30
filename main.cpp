@@ -2,14 +2,14 @@
 #include <array>
 #include <functional>
 
-#include "src/AuxMethods/SetOfPoints/PointVal/Point/Point.h"
-#include "src/AuxMethods/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "src/Points/SetOfPoints/PointVal/Point/Point.h"
+#include "src/Points/SetOfPoints/PointVal/Point/PointOperators.h"
 
-#include "src/AuxMethods/SetOfPoints/PointVal/PointVal.h"
-#include "src/AuxMethods/SetOfPoints/PointVal/PointValOperators.h"
+#include "src/Points/SetOfPoints/PointVal/PointVal.h"
+#include "src/Points/SetOfPoints/PointVal/PointValOperators.h"
 
-#include "src/AuxMethods/SetOfPoints/SetOfPoints.h"
-#include "src/AuxMethods/SetOfPoints/SetOfPointOperators.h"
+#include "src/Points/SetOfPoints/SetOfPoints.h"
+#include "src/Points/SetOfPoints/SetOfPointOperators.h"
 
 using namespace OptLib;
 
