@@ -34,9 +34,12 @@ namespace OptLib
     public:
         SetOfPointVals() = default;
         template<typename T>
-        SetOfPointVals(T&& s) : SetOfPoints<count, pointval>{std::forward<T>(s)} {}
+        SetOfPointVals(T&& s) : 
+            SetOfPoints<count, pointval>{std::forward<T>(s)} {}
         template<typename T>
-        SetOfPointVals(T&& s, const std::array<double, count> &funcVals) : // transforms points to points with vals
+        SetOfPointVals(
+            T&& s, 
+            const std::array<double, count> &funcVals) : // transforms points to points with vals
             SetOfPointVals<count, pointval>{make_field(std::forward(s), funcVals)}
         {
         }
