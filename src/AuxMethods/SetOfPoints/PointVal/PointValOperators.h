@@ -73,7 +73,7 @@ namespace OptLib
     auto sqrt(const PointVal<dim> &p)
     {
         assert(p.Val > 0.0);
-         assert(
+        assert(
             std::none_of(
                 p.P.cbegin(), 
                 p.P.cend(), 

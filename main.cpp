@@ -2,13 +2,13 @@
 #include <array>
 #include <functional>
 
-#include "src/AuxMethods/PointVal/Point/Point.h"
-#include "src/AuxMethods/PointVal/Point/PointOperators.h"
+#include "src/AuxMethods/SetOfPoints/PointVal/Point/Point.h"
+#include "src/AuxMethods/SetOfPoints/PointVal/Point/PointOperators.h"
 
-#include "src/AuxMethods/PointVal/PointVal.h"
-#include "src/AuxMethods/PointVal/PointValOperators.h"
+#include "src/AuxMethods/SetOfPoints/PointVal/PointVal.h"
+#include "src/AuxMethods/SetOfPoints/PointVal/PointValOperators.h"
 
-#include "src/AuxMethods/SetOfPoints.h"
+#include "src/AuxMethods/SetOfPoints/SetOfPoints.h"
 
 using namespace OptLib;
 
@@ -68,18 +68,6 @@ int main()
             Point<3>{3.0, 2.0, 1.0}
         }
     };
-
-    auto res = (*sp1.begin()) + (*(sp1.end()-1));
-
-    auto pp{Point<3>{}};
-
-    auto out = std::accumulate(
-                    sp1.begin(), sp1.end(), pp,
-                    [](const auto& lhs, const auto& rhs)
-                    {
-                        return lhs + rhs;
-                    }
-                );
 
     auto mean1{sp1.mean()};
     auto [mean2, disp2] =  sp1.dispersion();

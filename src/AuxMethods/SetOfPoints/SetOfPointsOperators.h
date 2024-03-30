@@ -18,8 +18,11 @@ namespace OptLib
         const Point<dim> &B)
     {
         Point<count> out;
-        for (size_t i = 0; i < dim; ++i)
-            out[i] = dot_product(A[i], B);
+        std::transform(A.cbegin(), A.cend(), out.begin(), 
+            [&B](const auto& v)
+            {
+                return dot_product(v, B);
+            });
         return out;
     }
 
@@ -40,9 +43,5 @@ namespace OptLib
 
         return o;
     }
-
-    
 } // OptLib
-
-
 #endif

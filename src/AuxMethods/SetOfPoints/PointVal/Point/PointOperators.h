@@ -13,9 +13,12 @@ namespace OptLib
 	{
 		static_assert(dim > 0);
 		o << "{" << p[0];
+		if constexpr (dim >1)
+		{
 		for(size_t i = 1; i < dim; ++i)
 		{
 			o << ", " << p[i];
+		}
 		}
 		o << "}";
 		return o;

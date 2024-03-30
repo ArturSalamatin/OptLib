@@ -30,7 +30,7 @@ namespace OptLib
 
             return 
                  std::accumulate(
-                    cbegin()+1, cend(), (*this)[0],
+                    cbegin()+1, cend(), (*cbegin()),
                     std::plus<point>{}
                 ) / (double)count; 
         }
@@ -40,13 +40,13 @@ namespace OptLib
             static_assert(count > 0);
             point avg{mean()};
 
-            auto functor = [&](const point& p)
+            auto functor = [&avg](const point& p)
                 {
                     return (p - avg)*(p-avg);
                 };
 
             point result { std::accumulate(
-                cbegin()+1, cend(), functor((*this)[0]),
+                cbegin()+1, cend(), functor((*cbegin())),
                 [&](const point& init, const point& p)
                 {
                     return init + functor(p);
