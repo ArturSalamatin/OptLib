@@ -139,15 +139,11 @@ namespace OptLib
 	auto abs(const Point<dim>& arr1)
 	{
 		Point<dim> result;
-		double res{0.0};
 		std::transform(
-			arr1.begin(), arr1.end(), 
-			arr1.begin(), result.begin(), 
-			std::multiplies<>{}
+			arr1.begin(), arr1.end(), result.begin(), 
+			PointOps::UnaryOps::abs()
 		);
-		for (const auto& el : result)
-			res += el;
-		return std::sqrt(res);
+		return result;
 	}
 	
 	template<size_t dim>

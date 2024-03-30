@@ -54,7 +54,7 @@ namespace OptLib
                 rhs.P.cbegin(), rhs.P.cend(), 
                 [](double x) 
                 {
-                    return x != 0.0;
+                    return x == 0.0;
                 }
             )
         );

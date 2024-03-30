@@ -9,6 +9,7 @@
 #include "src/AuxMethods/SetOfPoints/PointVal/PointValOperators.h"
 
 #include "src/AuxMethods/SetOfPoints/SetOfPoints.h"
+#include "src/AuxMethods/SetOfPoints/SetOfPointOperators.h"
 
 using namespace OptLib;
 
@@ -49,14 +50,14 @@ int main()
 
 
     // testting PointVal ctors
-    auto pv1{PointVal<3>{rp16, 1.0}};
+    auto pv1{PointVal<3>{rp16+8.0, 1.0}};
     auto pv2{pv1};
 
     // testing PointVal operators
     auto pv3{pv1+pv2};
     std::cout << pv3 << std::endl;
 
-    auto pv4{sqrt(pv1)};
+    auto pv4{sqrt(abs(pv1))};
 
     auto pv5{pv3/pv4};
 
@@ -68,6 +69,12 @@ int main()
             Point<3>{3.0, 2.0, 1.0}
         }
     };
+
+    auto pp1{Point<3>{1.0, 1.0, 1.0}};
+    auto out{sp1*pp1};
+
+    std::cout << sp1 << '\n' << pp1 << std::endl;
+
 
     auto mean1{sp1.mean()};
     auto [mean2, disp2] =  sp1.dispersion();

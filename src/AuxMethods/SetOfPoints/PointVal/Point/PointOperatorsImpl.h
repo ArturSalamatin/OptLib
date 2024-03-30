@@ -71,6 +71,15 @@ namespace OptLib
 					return std::sqrt(lhs);
 				}
 			};
+			
+			struct abs
+			{
+				template <class T>
+				constexpr T operator()(const T &lhs) const
+				{
+					return std::abs(lhs);
+				}
+			};
 		}
 
 		namespace BinaryOps
