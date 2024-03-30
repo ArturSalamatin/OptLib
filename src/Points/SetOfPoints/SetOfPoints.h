@@ -15,7 +15,7 @@ namespace OptLib
         SetOfPoints() = default;
 
         template <typename T>
-        SetOfPoints(T &&p) : RawSetOfPoints<dim>{std::forward<T>(p)}
+        SetOfPoints(T &&p) : RawSetOfPoints<count, point>{std::forward<T>(p)}
         {
         }
 

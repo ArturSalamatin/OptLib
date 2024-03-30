@@ -1,5 +1,5 @@
 #pragma once
-#include "Point/Point.h"
+#include "Point.h"
 
 namespace OptLib
 {

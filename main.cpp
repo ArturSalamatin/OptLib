@@ -11,6 +11,9 @@
 #include "src/Points/SetOfPoints/SetOfPoints.h"
 #include "src/Points/SetOfPoints/SetOfPointOperators.h"
 
+
+#include "src/Points/SetOfPointVals.h"
+
 using namespace OptLib;
 
 /// @brief program entry point
@@ -78,6 +81,19 @@ int main()
 
     auto mean1{sp1.mean()};
     auto [mean2, disp2] =  sp1.dispersion();
+
+
+    // testing SetOfPointVals ctors
+    auto rsp{
+        RawSetOfPoints<3, PointVal<2>>{
+            PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0},
+            PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0},
+            PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0}
+        }
+    };
+
+    auto sopv{SetOfPointVals<3, PointVal<2>>{rsp}};
+
 
     return 0;
 }
