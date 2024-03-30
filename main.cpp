@@ -93,6 +93,7 @@ int main()
     };
 
     auto sopv{SetOfPointVals<3, PointVal<2>>{rsp}};
+    auto sopv2{SetOfPointVals<3, PointVal<2>>{std::move(rsp)}};
 
 
     return 0;
