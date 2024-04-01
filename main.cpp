@@ -45,57 +45,49 @@ int main()
     auto rp12 = sqrt(rp6);
     auto rp13 = rp6 / 2.0;
     auto rp14 = rp6 / 2.0;
-    auto rp15{1.0+rp6};
-    auto rp16{1.0-rp6};
+    auto rp15{1.0 + rp6};
+    auto rp16{1.0 - rp6};
 
-    auto dp1{dot_product(rp7,rp8)};
+    auto dp1{dot_product(rp7, rp8)};
     auto dp2{norm(rp7)};
-    auto dp3{dist(rp7,rp8)};
-
+    auto dp3{dist(rp7, rp8)};
 
     // testting PointVal ctors
-    auto pv1{PointVal<3>{rp16+8.0, 1.0}};
+    auto pv1{PointVal<3>{rp16 + 8.0, 1.0}};
     auto pv2{pv1};
 
     // testing PointVal operators
-    auto pv3{pv1+pv2};
+    auto pv3{pv1 + pv2};
     std::cout << pv3 << std::endl;
 
     auto pv4{sqrt(abs(pv1))};
 
-    auto pv5{pv3/pv4};
-
+    auto pv5{pv3 / pv4};
 
     // testing SetOfPoints ctors
     auto sp1{
         SetOfPoints<2, Point<3>>{
             Point<3>{1.0, 2.0, 3.0},
-            Point<3>{3.0, 2.0, 1.0}
-        }
-    };
+            Point<3>{3.0, 2.0, 1.0}}};
 
     auto pp1{Point<3>{1.0, 1.0, 1.0}};
-    auto out{sp1*pp1};
+    auto out{sp1 * pp1};
 
-    std::cout << sp1 << '\n' << pp1 << std::endl;
-
+    std::cout << sp1 << '\n'
+              << pp1 << std::endl;
 
     auto mean1{sp1.mean()};
-    auto [mean2, disp2] =  sp1.dispersion();
-
+    auto [mean2, disp2] = sp1.dispersion();
 
     // testing SetOfPointVals ctors
     auto rsp{
         RawSetOfPoints<3, PointVal<2>>{
             PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0},
             PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0},
-            PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0}
-        }
-    };
+            PointVal<2>{RawPoint<2>{1.0, 1.0}, 2.0}}};
 
     auto sopv{SetOfPointVals<3, PointVal<2>>{rsp}};
     auto sopv2{SetOfPointVals<3, PointVal<2>>{std::move(rsp)}};
-
 
     // testing Function
 
@@ -104,7 +96,8 @@ int main()
     ConcreteFunc::Rozenbrok Roz{};
     double result2{Roz(Point<2>{2.0, 1.0})};
 
-
+    ConcreteFunc::FuncAlongGradDirection<2> f{&Him, Point<2>{2.0, 1.0}};
+    auto gr{f.grad(Point<1>{3.0})};
 
     return 0;
 }
