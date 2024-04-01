@@ -14,6 +14,7 @@
 #include "src/Points/SetOfPointVals.h"
 
 #include "src/Functions/Function.h"
+#include "src/Functions/FunctionParam.h"
 
 using namespace OptLib;
 
@@ -98,6 +99,11 @@ int main()
 
     ConcreteFunc::FuncAlongGradDirection<2> f{&Him, Point<2>{2.0, 1.0}};
     auto gr{f.grad(Point<1>{3.0})};
+
+
+    // testing FunctionParam
+    auto fp{ConcreteFuncParam::LinearFuncWithGrad{}};
+    fp(Point<1>{1.0}, Point<1>{2.0});
 
     return 0;
 }

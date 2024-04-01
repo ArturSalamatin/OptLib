@@ -10,48 +10,53 @@ namespace OptLib
 {
 	namespace FuncParamInterface
 	{
-		/// <summary>
-		/// Function interface that takes array(dimP) of parameters and array(dimX) of arguments
-		/// </summary>
+		/// @brief Function interface f(X | P) that takes array(dimP) of parameters and array(dimX) of arguments
+		/// @tparam dimX number of arguments
+		/// @tparam dimP number of parameters
 		template <size_t dimX, size_t dimP>
 		class IFuncParam
 		{
 		public:
 			virtual double operator()(const Point<dimX> &x, const Point<dimP> &a) const = 0;
 
-			template <size_t count>
-			Point<count> operator()(const SetOfPoints<count, Point<dimX>> &x, const Point<dimP> &a) const
+			template<size_t count>
+			auto operator()(const SetOfPoints<count, Point<dimX>> &x, const Point<dimP> &a) const 
 			{
-				std::array<Point<count>::value_type, count> out;
+				Point<count> out{};
 				for (size_t i = 0; i < count; ++i)
-					out[i] = (*this))(x[i], a);
+					out[i] = (*this)(x[i], a);
 				return out;
 			}
 		};
 
 		template <size_t dimX, size_t dimP>
-		class IFuncParamWithGrad : public IFuncParam<dimX, dimP>
+		class IFuncParamGrad
 		{
 		public:
 			virtual Grad<dimX> GradP(const Point<dimX> &x, const Point<dimP> &a) const = 0;
 		};
 
 		template <size_t dimX, size_t dimP>
-		class FuncWithParams : public FuncInterface::IFunc<dimX>
+		class FuncParams : public FuncInterface::IFunc<dimX>
 		{
 		protected:
-			FuncParamInterface::IFuncParam<dimX, dimP> *f;
+			const FuncParamInterface::IFuncParam<dimX, dimP>& f;
 			Point<dimP> ParamVals;
 
 		public:
-			FuncWithParams(Point<dimP> &&pVals, FuncParamInterface::IFuncParam<dimX, dimP> *f_pointer) : f{f_pointer}, ParamVals{std::move(pVals)} {}
+		template<typename T>
+			FuncParams(T&& pVals, FuncParamInterface::IFuncParam<dimX, dimP> *f_pointer) : f{*f_pointer}, ParamVals{std::forward<T>(pVals)} {}
 
 			double operator()(const Point<dimX> &x) const override
 			{
-				return f->operator()(x, ParamVals);
+				return f(x, ParamVals);
 			}
 		};
 
+		template <size_t dimX, size_t dimP>
+		class IFuncParamWithGrad : public IFuncParam<dimX, dimP>, public IFuncParamGrad<dimX, dimP>
+		{
+		};
 	} // FuncParamInterface
 } // OptLib
 

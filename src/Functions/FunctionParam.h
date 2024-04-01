@@ -1,5 +1,7 @@
-#pragma once
-#include "stdafx.h"
+#ifndef FUNCTIONPARAM_H
+#define FUNCTIONPARAM_H
+
+#include "Interface/FuncParamInterface.h"
 
 namespace OptLib
 {
@@ -14,17 +16,19 @@ namespace OptLib
 			}
 		};
 
-		class LinearFuncWithGrad : public FuncParamInterface::IFuncParamWithGrad<1, 1>
+		class LinearFuncWithGrad : public LinearFunc, FuncParamInterface::IFuncParamGrad<1, 1>
 		{
 		public:
 			double operator() (const Point<1>& x, const Point<1>& a) const override
 			{
 				return x[0] * a[0];
 			}
-			Grad<1> GradP(const Point<1>& x, const Point<1>& a) const override
+			auto GradP(const Point<1>& x, const Point<1>& a) const -> Grad<1> override
 			{
-				return a;
+				return Grad<1>{a};
 			}
 		};
 	} // ConcreteFuncParam
 } // OptLib
+
+#endif
