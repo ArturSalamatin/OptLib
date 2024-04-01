@@ -8,29 +8,30 @@
 
 namespace OptLib
 {
+	template <size_t dim>
+	using Grad = Point<dim>;
+
+	template <size_t dim>
+	using Hess = SetOfPoints<dim, Grad<dim>>;
+
 	namespace FuncInterface
 	{
-		template <size_t dim>
-		using Grad = Point<dim>;
-
-		template <size_t dim>
-		using Hess = SetOfPoints<dim, Point<dim>>;
-
 		template <size_t dim>
 		class IFunc
 		{ // direct methods only call the function calculation
 		public:
 			virtual double operator()(const Point<dim> &) const = 0;
+
 			template <size_t count>
 			auto operator()(const SetOfPoints<count, Point<dim>> &x) const
 			{
-				std::array<Point<dim>::value_type, count> out;
+				Point<count> out;
 				for (size_t i = 0; i < count; ++i)
 					out[i] = (*this)(x[i]);
 				return out;
 			}
 		};
-		
+
 		template <size_t dim>
 		static auto CreateFromPoint(Point<dim> &&p, const IFunc<dim> *f)
 		{
@@ -45,10 +46,11 @@ namespace OptLib
 		{
 		public:
 			virtual Grad<dim> grad(const Point<dim> &) const = 0;
+
 			template <size_t count>
 			auto grad(const SetOfPoints<count, Point<dim>> &x) const
 			{
-				std::array<Point<dim>::value_type, count> out;
+				SetOfPoints<count, Grad<dim>> out;
 				for (size_t i = 0; i < count; ++i)
 					out[i] = (*this).grad(x[i]);
 				return out;

@@ -11,8 +11,9 @@
 #include "src/Points/SetOfPoints/SetOfPoints.h"
 #include "src/Points/SetOfPoints/SetOfPointOperators.h"
 
-
 #include "src/Points/SetOfPointVals.h"
+
+#include "src/Functions/Function.h"
 
 using namespace OptLib;
 
@@ -94,6 +95,15 @@ int main()
 
     auto sopv{SetOfPointVals<3, PointVal<2>>{rsp}};
     auto sopv2{SetOfPointVals<3, PointVal<2>>{std::move(rsp)}};
+
+
+    // testing Function
+
+    ConcreteFunc::Himmel Him{};
+    double result1{Him(Point<2>{2.0, 1.0})};
+    ConcreteFunc::Rozenbrok Roz{};
+    double result2{Roz(Point<2>{2.0, 1.0})};
+
 
 
     return 0;
