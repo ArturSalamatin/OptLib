@@ -121,7 +121,7 @@ namespace OptLib
 		class FunctionWithHess : public Function, public FuncInterface::IHess<1>
 		{
 		public:
-			virtual auto hess(const Point<1> &x) const -> Hess<1> override
+			auto hess(const Point<1> &x) const -> Hess<1> override
 			{
 				return Hess<1>{2.0};
 			}
@@ -189,7 +189,7 @@ namespace OptLib
 			}
 
 		public:
-			virtual double operator()(const Point<dim> &x) const override
+			double operator()(const Point<dim> &x) const override
 			{
 				double res = 0.0;
 				for (size_t i = 0; i < dim; ++i)
