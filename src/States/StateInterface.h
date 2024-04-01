@@ -1,5 +1,9 @@
-#pragma once
-#include "stdafx.h"
+#ifndef STATEINTERFACE_H
+#define STATEINTERFACE_H
+
+#include "../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../Points/SetOfPoints/SetOfPoints.h"
 
 namespace OptLib
 {
@@ -23,7 +27,7 @@ namespace OptLib
 		/// State for methods of optimization in dim-dimensional space based on simplexes
 		/// </summary>
 		template<size_t dim, typename simplex>
-		class IStateSimplex : public StateInterface::IState<dim>
+		class IStateSimplex : public IState<dim>
 		{
 		public: // overriden from predecessor
 			bool IsConverged(double abs_tol, double rel_tol) const override
@@ -31,7 +35,7 @@ namespace OptLib
 				auto [avg, disp] = GuessDomain().Dispersion();
 				auto [var,std] = VarCoef<PointVal<dim>>(avg, disp) ;
 
-				for (int i = 0; i < dim; i++)
+				for (size_t i = 0; i < dim; ++i)
 				{
 					bool f = (((std[i]) < abs_tol) || (var[i] < rel_tol)) && (((std.Val) < abs_tol) || (var.Val < rel_tol));
 					if (!f) return false;
@@ -40,11 +44,11 @@ namespace OptLib
 			}
 		protected:
 			simplex ItsGuessDomain; // the field is unique for direct optimization methods
-			std::array<double, dim + 1> FuncVals(const SetOfPoints<dim + 1, Point<dim>>& State, const FuncInterface::IFunc<dim>* f) 
+			auto FuncVals(const SetOfPoints<dim + 1, Point<dim>>& State, const FuncInterface::IFunc<dim>* f) 
 			{
 				return (*f)(State);
 			}
-			void UpdateDomain(SetOfPoints<dim + 1, Point<dim>>&& State, std::array<double, dim + 1>&& funcVals)
+			void UpdateDomain(SetOfPoints<dim + 1, Point<dim>>&& State, Point<dim + 1>&& funcVals)
 			{
 				SetDomain(
 					simplex{ 
@@ -81,3 +85,5 @@ namespace OptLib
 		};
 	} // StateInterface
 } // OptLib
+
+#endif

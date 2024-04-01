@@ -1,5 +1,12 @@
-#pragma once
-#include "stdafx.h"
+#ifndef IMPROVEDSTATE_H
+#define IMPROVEDSTATE_H
+
+#include <vector>
+#include "../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../Points/Definitions.h"
+#include "../Functions/Interface/FuncInterface.h"
+#include "StateInterface.h"
+#include "State.h"
 
 namespace OptLib
 {
@@ -58,3 +65,5 @@ namespace OptLib
 
 	} // StateWithMemory
 } // OptLib
+
+#endif

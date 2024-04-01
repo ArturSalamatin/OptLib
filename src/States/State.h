@@ -1,5 +1,12 @@
-#pragma once
-#include "stdafx.h"
+#ifndef STATE_H
+#define STATE_H
+
+#include "../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../Points/SetOfPoints/SetOfPoints.h"
+#include "../Points/Definitions.h"
+#include "../Functions/Interface/FuncInterface.h"
+#include "StateInterface.h"
 
 namespace OptLib
 {
@@ -122,3 +129,5 @@ namespace OptLib
 		};
 	} // ConcreteState
 } // OptLib
+
+#endif
