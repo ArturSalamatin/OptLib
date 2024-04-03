@@ -1,10 +1,28 @@
 #ifndef SETOFPOINTVALS_H
 #define SETOFPOINTVALS_H
 
+#include "SetOfPoints/PointVal/Point/Point.h"
 #include "SetOfPoints/SetOfPoints.h"
 
 namespace OptLib
 {
+    /// <summary>
+    /// assembles PointVal from Point and Val
+    /// </summary>
+    /// <param name="_s"></param>
+    /// <param name="FuncVals"></param>
+    /// <returns></returns>
+    template <typename pointval, size_t count, typename T>
+    auto assign_values(
+        T &&s,
+        const Point<count> &FuncVals)
+    {
+        SetOfPoints<count, pointval> P;
+        for (size_t i = 0; i < count; ++i)
+            P[i] = pointval{std::forward<decltype(s[0])>(s[i]), FuncVals[i]};
+        return P;
+    }
+
     /// <summary>
     /// Set of points with associated value. The calss makes PointVal from Point and Val
     /// </summary>
@@ -14,37 +32,20 @@ namespace OptLib
     class SetOfPointVals : public SetOfPoints<count, pointval>
     {
     public:
-        /// <summary>
-        /// assembles PointVal from Point and Val
-        /// </summary>
-        /// <param name="_s"></param>
-        /// <param name="FuncVals"></param>
-        /// <returns></returns>
-        template<typename T>
-        static auto make_field(
-            T&& s, 
-            const Point<count> &FuncVals)
-        {
-            SetOfPoints<count, pointval> P;
-            for (size_t i = 0; i < count; ++i)
-                P[i] = pointval{std::forward<decltype(s[0])>(s[i]), FuncVals[i]};
-            return P;
-        }
+        using point_type = pointval;
 
-    public:
         SetOfPointVals() = default;
-        template<typename T>
-        SetOfPointVals(T&& s) : 
-            SetOfPoints<count, pointval>{std::forward<T>(s)} {}
-        template<typename T>
+        template <typename T>
+        SetOfPointVals(T &&s) : SetOfPoints<count, pointval>{std::forward<T>(s)} {}
+        template <typename T>
         SetOfPointVals(
-            T&& s, 
+            T &&s,
             const std::array<double, count> &funcVals) : // transforms points to points with vals
-            SetOfPointVals<count, pointval>{make_field(std::forward(s), funcVals)}
+                                                         SetOfPointVals<count, pointval>{assign_values<pointval>(std::forward(s), funcVals)}
         {
         }
 
-        template<typename point>
+        template <typename point>
         auto PointsNoVal() const
         {
             SetOfPoints<count, point> out{};
@@ -66,20 +67,21 @@ namespace OptLib
 
     public:
         SetOfPointValsSort() = default;
-        
-        template<typename T>
-        SetOfPointValsSort(T&& s) : 
-            SetOfPointVals<count, pointval>{std::forward<T>(s)} 
-        { this->Sort(); }
 
-        template<typename T>
+        template <typename T>
+        SetOfPointValsSort(T &&s) : SetOfPointVals<count, pointval>{std::forward<T>(s)}
+        {
+            this->Sort();
+        }
+
+        template <typename T>
         SetOfPointValsSort(
-            T&& s, 
-            const std::array<double, count>& funcVals) : // transforms points to points with vals
-            SetOfPointValsSort<count, pointval>{make_field(std::forward<T>(s), funcVals)}
-        { }
+            T &&s,
+            const std::array<double, count> &funcVals) : // transforms points to points with vals
+                                                         SetOfPointValsSort<count, pointval>{make_field(std::forward<T>(s), funcVals)}
+        {
+        }
     };
 }
-
 
 #endif

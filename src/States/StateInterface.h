@@ -80,7 +80,7 @@ namespace OptLib
 			{ }
 
 			IStateSimplex(Simplex<dim>&& State, const OptLib::Point<dim+1>& funcVals) :
-				IStateSimplex{simplex::make_field(State, funcVals)}
+				IStateSimplex{assign_values<typename simplex::point_type>(State, funcVals)}
 			{ }
 			
 			IStateSimplex(SimplexVal<dim>&& State) :
