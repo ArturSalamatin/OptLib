@@ -14,15 +14,20 @@ namespace OptLib
 	template <size_t dim>
 	struct Point : private RawPoint<dim>
 	{
-		Point() = default;
+		Point() noexcept = default;
 
 		template<typename T>
 		Point(T&& p) noexcept :
 			RawPoint<dim>{std::forward<T>(p)}
 		{}
 
+		Point(const Point&) noexcept = default;
+
+		Point& operator=(Point&&) noexcept = default;
+		Point& operator=(const Point&) noexcept = default;
+
 		template<typename... Args>
-		Point(Args... a) :
+		Point(Args... a) noexcept :
 			RawPoint<dim>{a...}
 		{}
 
