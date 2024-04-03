@@ -50,6 +50,9 @@ namespace OptLib
 		protected:
 			PointVal<dim> dx{};
 		public:
+
+			using StateInterface::IState<dim>::IState;
+
 			bool IsConverged(double abs_tol, double rel_tol) const override
 			{
 				auto& std = dx;

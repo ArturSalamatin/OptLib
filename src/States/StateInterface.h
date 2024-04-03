@@ -17,8 +17,17 @@ namespace OptLib
 		{
 		protected:
 			// best-fit value
-			PointVal<dim> ItsGuess;
+			PointVal<dim> ItsGuess{};
 		public:
+			IState() = delete;
+
+			template<typename T>
+			IState(T&& point_val) noexcept : 
+				ItsGuess{std::forward<T>(point_val)}
+			{}
+
+			IState(const IState&) noexcept = default;
+
 			// concrete implementation depends on the order of optimization method
 			virtual bool IsConverged(double abs_tol, double rel_tol) const = 0;
 			const auto& Guess() const { return ItsGuess; };
@@ -52,31 +61,39 @@ namespace OptLib
 				return (*f)(State);
 			}
 
-			void UpdateDomain(Simplex<dim>&& State, const OptLib::Point<dim+1>& funcVals)
-			{
-				SetDomain(
-					simplex{ 
-						simplex::make_field(
-							std::move(State), 
-							funcVals
-						) 
-					}
-				);
-			}
+			// void UpdateDomain(Simplex<dim>&& State, const OptLib::Point<dim+1>& funcVals)
+			// {
+			// 	SetDomain(
+			// 		simplex{ 
+			// 			simplex::make_field(
+			// 				std::move(State), 
+			// 				funcVals
+			// 			) 
+			// 		}
+			// 	);
+			// }
 		public:
-			IStateSimplex() {}
+			IStateSimplex() = delete;
 
-			IStateSimplex(Simplex<dim>&& State, const FuncInterface::IFunc<dim>* f)
-			{
-				UpdateDomain(std::move(State), f);
-			}
+			IStateSimplex(Simplex<dim>&& State, const FuncInterface::IFunc<dim>* f) : 
+				IStateSimplex{std::move(State), FuncVals(State, f)}
+			{ }
+
+			IStateSimplex(Simplex<dim>&& State, const OptLib::Point<dim+1>& funcVals) :
+				IStateSimplex{simplex::make_field(State, funcVals)}
+			{ }
+			
+			IStateSimplex(SimplexVal<dim>&& State) :
+				IState{State.mean()},
+				ItsGuessDomain{State}
+			{ }
 
 			const simplex& GuessDomain() const { return ItsGuessDomain; } // unique for direct optimization methods
 			
-			void UpdateDomain(Simplex<dim>&& State, const FuncInterface::IFunc<dim>*  f)
-			{
-				UpdateDomain(std::move(State), FuncVals(State, f));
-			}
+			// void UpdateDomain(Simplex<dim>&& State, const FuncInterface::IFunc<dim>*  f)
+			// {
+			// 	UpdateDomain(std::move(State), FuncVals(State, f));
+			// }
 			virtual void SetDomain(SimplexVal<dim>&& newDomain)
 			{
 				ItsGuessDomain = simplex{ std::move(newDomain) };

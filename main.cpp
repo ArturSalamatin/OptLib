@@ -58,6 +58,7 @@ int main()
     // testting PointVal ctors
     auto pv1{PointVal<3>{rp16 + 8.0, 1.0}};
     auto pv2{pv1};
+    auto pv33{PointVal<3>{Point<3>{}, 1.0}};
 
     // testing PointVal operators
     auto pv3{pv1 + pv2};
@@ -109,9 +110,15 @@ int main()
 
 
     // testing State
- //   ConcreteState::StateSegment state_segm{};
+    Simplex<1> simpl{Point<1>{1.0}, Point<1>{3.0}};
+    ConcreteState::StateSegment state_segm{simpl, &f};
 
-StateInterface::IStateSimplex<1, SimplexValNoSort<1>> sts{};
+    ConcreteState::StatePoint<3> stp{
+        PointVal<3>{
+            Point<3>{1.0, 2.0, 4.0}, 
+            5.0
+        }
+    };
 
  //   ConcreteState::StateDirect<2> state_direct{};
 
