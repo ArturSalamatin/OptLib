@@ -16,6 +16,8 @@
 #include "src/Functions/Function.h"
 #include "src/Functions/FunctionParam.h"
 
+#include "src/States/State.h"
+
 using namespace OptLib;
 
 /// @brief program entry point
@@ -104,6 +106,16 @@ int main()
     // testing FunctionParam
     auto fp{ConcreteFuncParam::LinearFuncWithGrad{}};
     fp(Point<1>{1.0}, Point<1>{2.0});
+
+
+    // testing State
+ //   ConcreteState::StateSegment state_segm{};
+
+StateInterface::IStateSimplex<1, SimplexValNoSort<1>> sts{};
+
+ //   ConcreteState::StateDirect<2> state_direct{};
+
+
 
     return 0;
 }
