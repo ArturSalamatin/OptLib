@@ -1,5 +1,9 @@
-#pragma once
+#ifndef FUNCTIONWITHMEMORY
+#define FUNCTIONWITHMEMORY
 
+#include <atomic>
+#include "FuncInterface.h"
+#include "FuncParamInterface.h"
 
 namespace OptLib
 {
@@ -18,12 +22,12 @@ namespace OptLib
 
 			double operator () (const Point<dim>& x) const override
 			{
-				const_cast<ICounterFunc*>(this)->Counter += 1;
+				Counter += 1;
 
 				return (*f)(x);
 			}
 
-			size_t Counter = 0;
+			mutable atomic_size_t Counter {0ull};
 		};
 
 		/// <summary>
@@ -43,8 +47,9 @@ namespace OptLib
 				return (*f)(x, a);
 			}
 
-			mutable size_t Counter = 0;
+			mutable atomic_size_t Counter{0ull};
 		};
-
 	} // FuncWithCounter
 } // OptLib
+
+#endif
