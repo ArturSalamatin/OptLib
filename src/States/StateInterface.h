@@ -9,23 +9,20 @@ namespace OptLib
 {
 	namespace StateInterface
 	{
-		/// <summary>
-		/// defines abstract basic functions, which are common for every type of state
-		/// </summary>
+		/// @brief Defines abstract basic functions, which are common for every type of state
+		/// @tparam dim Dimensionality of space of function arguments
 		template<size_t dim>
 		class IState
 		{
 		protected:
+			// best-fit value
 			PointVal<dim> ItsGuess;
 		public:
 			// concrete implementation depends on the order of optimization method
-			virtual bool IsConverged(double abs_tol, double rel_tol) const  = 0;
-			const PointVal<dim>& Guess() const { return ItsGuess; };
-		};
 
-		/// <summary>
-		/// State for methods of optimization in dim-dimensional space based on simplexes
-		/// </summary>
+		/// @brief State for methods of optimization in dim-dimensional space based on simplexes
+		/// @tparam simplex Type for the set of points describing the best-fit region
+		/// @tparam dim Dimensionality of space of function arguments
 		template<size_t dim, typename simplex>
 		class IStateSimplex : public IState<dim>
 		{
@@ -33,7 +30,7 @@ namespace OptLib
 			bool IsConverged(double abs_tol, double rel_tol) const override
 			{// is average and relative tolerance met?
 				auto [avg, disp] = GuessDomain().Dispersion();
-				auto [var,std] = VarCoef<PointVal<dim>>(avg, disp) ;
+				auto [var, std] = VarCoef<PointVal<dim>>(avg, disp) ;
 
 				for (size_t i = 0; i < dim; ++i)
 				{
@@ -61,15 +58,11 @@ namespace OptLib
 			}
 		public:
 			IStateSimplex() {}
-			/*IStateSimplex(const SetOfPoints<dim + 1, Point<dim>>& State, FuncInterface::IFunc<dim>* f)
-			{
-				auto s{ State };
-				UpdateDomain(std::move(s), f);
-			}*/
-			IStateSimplex(SetOfPoints<dim + 1, Point<dim>>&& State, FuncInterface::IFunc<dim>* f)
+
 			{
 				UpdateDomain(std::move(State), f);
 			}
+
 			const simplex& GuessDomain() const { return ItsGuessDomain; } // unique for direct optimization methods
 			
 			void UpdateDomain(SetOfPoints<dim + 1, Point<dim>>&& State, const FuncInterface::IFunc<dim>* f)
