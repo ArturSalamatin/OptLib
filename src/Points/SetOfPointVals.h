@@ -23,11 +23,11 @@ namespace OptLib
         template<typename T>
         static auto make_field(
             T&& s, 
-            const std::array<double, count> &FuncVals)
+            const Point<count> &FuncVals)
         {
             SetOfPoints<count, pointval> P;
             for (size_t i = 0; i < count; ++i)
-                P[i] = pointval{std::forward<decltype(s[i])>(s[i]), FuncVals[i]};
+                P[i] = pointval{std::forward<decltype(s[0])>(s[i]), FuncVals[i]};
             return P;
         }
 
