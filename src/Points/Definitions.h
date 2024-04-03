@@ -11,6 +11,12 @@ namespace OptLib
     template <size_t dim>
     using SimplexValNoSort = SetOfPointVals<dim + 1, PointVal<dim>>;
 
+    template <size_t dim>
+    using Simplex = SetOfPoints<dim + 1, Point<dim>>;
+    
+    template <size_t dim>
+    using SimplexVal = SetOfPoints<dim + 1, PointVal<dim>>;
+
     using Segment = SimplexValNoSort<1>;
 
     template <size_t dim>
