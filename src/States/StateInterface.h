@@ -4,6 +4,7 @@
 #include "../Points/SetOfPoints/PointVal/Point/Point.h"
 #include "../Points/SetOfPoints/PointVal/PointVal.h"
 #include "../Points/SetOfPoints/SetOfPoints.h"
+#include "../Points/Definitions.h"
 
 namespace OptLib
 {
@@ -19,6 +20,11 @@ namespace OptLib
 			PointVal<dim> ItsGuess;
 		public:
 			// concrete implementation depends on the order of optimization method
+			virtual bool IsConverged(double abs_tol, double rel_tol) const = 0;
+			const auto& Guess() const { return ItsGuess; };
+			const auto& Point() const { return Guess().P; };
+			const auto& Value() const { return Guess().Val; };
+		};
 
 		/// @brief State for methods of optimization in dim-dimensional space based on simplexes
 		/// @tparam simplex Type for the set of points describing the best-fit region
@@ -29,29 +35,30 @@ namespace OptLib
 		public: // overriden from predecessor
 			bool IsConverged(double abs_tol, double rel_tol) const override
 			{// is average and relative tolerance met?
-				auto [avg, disp] = GuessDomain().Dispersion();
-				auto [var, std] = VarCoef<PointVal<dim>>(avg, disp) ;
+				auto [avg, disp] = GuessDomain().dispersion();
+				auto [var, std] = var_coef<PointVal<dim>>(avg, disp) ;
 
 				for (size_t i = 0; i < dim; ++i)
 				{
-					bool f = (((std[i]) < abs_tol) || (var[i] < rel_tol)) && (((std.Val) < abs_tol) || (var.Val < rel_tol));
+					bool f = ((std[i]) < abs_tol) || (var[i] < rel_tol);
 					if (!f) return false;
 				}
-				return true;
+				return (std.Val < abs_tol) || (var.Val < rel_tol);
 			}
 		protected:
 			simplex ItsGuessDomain; // the field is unique for direct optimization methods
-			auto FuncVals(const SetOfPoints<dim + 1, Point<dim>>& State, const FuncInterface::IFunc<dim>* f) 
+			auto FuncVals(const Simplex<dim>& State, const FuncInterface::IFunc<dim>* f) 
 			{
 				return (*f)(State);
 			}
-			void UpdateDomain(SetOfPoints<dim + 1, Point<dim>>&& State, Point<dim + 1>&& funcVals)
+
+			void UpdateDomain(Simplex<dim>&& State, const OptLib::Point<dim+1>& funcVals)
 			{
 				SetDomain(
 					simplex{ 
 						simplex::make_field(
 							std::move(State), 
-							std::move(funcVals)
+							funcVals
 						) 
 					}
 				);
@@ -59,21 +66,22 @@ namespace OptLib
 		public:
 			IStateSimplex() {}
 
+			IStateSimplex(Simplex<dim>&& State, const FuncInterface::IFunc<dim>* f)
 			{
 				UpdateDomain(std::move(State), f);
 			}
 
 			const simplex& GuessDomain() const { return ItsGuessDomain; } // unique for direct optimization methods
 			
-			void UpdateDomain(SetOfPoints<dim + 1, Point<dim>>&& State, const FuncInterface::IFunc<dim>* f)
+			void UpdateDomain(Simplex<dim>&& State, const FuncInterface::IFunc<dim>*  f)
 			{
-				UpdateDomain(std::move(State), std::move(FuncVals(State, f)));
+				UpdateDomain(std::move(State), FuncVals(State, f));
 			}
-			virtual void SetDomain(SetOfPoints<dim + 1, PointVal<dim>>&& newDomain)
+			virtual void SetDomain(SimplexVal<dim>&& newDomain)
 			{
 				ItsGuessDomain = simplex{ std::move(newDomain) };
 
-				ItsGuess = GuessDomain().Mean();
+				ItsGuess = GuessDomain().mean();
 			}
 		};
 	} // StateInterface

@@ -1,6 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include <algorithm>
 #include "../Points/SetOfPoints/PointVal/Point/Point.h"
 #include "../Points/SetOfPoints/PointVal/PointVal.h"
 #include "../Points/SetOfPoints/SetOfPoints.h"
@@ -25,13 +26,14 @@ namespace OptLib
 		{
 		public:
 			StateSegment(const StateSegment&) = default;
-			StateSegment(SetOfPoints<2, Point<1>>&& State, FuncInterface::IFunc<1>* f)
+			StateSegment(const Simplex<1>& State, const FuncInterface::IFunc<1>* f)
 				:
-				StateInterface::IStateSimplex<1, SimplexValNoSort<1>>(std::move(OrderPointsInSegment(State)), f)
+				StateInterface::IStateSimplex<1, SimplexValNoSort<1>>(
+					std::move(OrderPointsInSegment(State)), f)
 			{}
 
 		protected:
-			SetOfPoints<2, Point<1>> OrderPointsInSegment(SetOfPoints<2, Point<1>>& setOfPoints)
+			auto OrderPointsInSegment(Simplex<1> setOfPoints) -> Simplex<1>
 			{
 				if (setOfPoints[0][0] > setOfPoints[1][0])
 					std::swap(setOfPoints[0], setOfPoints[1]);
@@ -91,7 +93,7 @@ namespace OptLib
 				return x;
 			}
 			PointVal<dim> bestGuess;
-			StateStochastic(Point<dim>&& State, FuncInterface::IFunc<dim>* f, double initialTemperature, double (*TemperatureFunction) (double, int), double step, double temperature_end) :
+			StateStochastic(OptLib::Point<dim>&& State, FuncInterface::IFunc<dim>* f, double initialTemperature, double (*TemperatureFunction) (double, int), double step, double temperature_end) :
 				//StateInterface::IState<dim>(std::move(State), f), 
 				temperature{ initialTemperature }, Temperature{ TemperatureFunction }, h{ step }, endTemperature{ temperature_end },iteration{ 0 } 
 			{
