@@ -120,8 +120,31 @@ int main()
         }
     };
 
- //   ConcreteState::StateDirect<2> state_direct{};
+    Simplex<3> simpl2{
+        Point<3>{1.0, 1.0, 2.5}, 
+        Point<3>{3.0, 2.0,5.6},
+        Point<3>{1.0, 7.0, 2.5}, 
+        Point<3>{12.0, 2.0,5.6}};
 
+    ConcreteFunc::Paraboloid<3> fpp{
+        Hess<3>{
+            Point<3>{1.0, 2.0, 3.0},
+            Point<3>{1.0, 16.0, 3.0},
+            Point<3>{1.0, 2.0, 7.0}
+        }
+    };
+
+    // by copy-ctor
+    ConcreteState::StateDirect<3> state_direct{simpl2, &fpp};
+    // by move-ctro
+    ConcreteState::StateDirect<3> state_direct2{
+        Simplex<3>{
+            Point<3>{1.0, 1.0, 2.5}, 
+            Point<3>{3.0, 2.0,5.6},
+            Point<3>{1.0, 7.0, 2.5}, 
+            Point<3>{12.0, 2.0,5.6}
+        }, 
+        &fpp};
 
 
     return 0;
