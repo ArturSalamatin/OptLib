@@ -88,6 +88,17 @@ namespace OptLib
 				ItsGuessDomain{State}
 			{ }
 
+			IStateSimplex(const Simplex<dim>& State, const FuncInterface::IFunc<dim>* f) : 
+				IStateSimplex{State, FuncVals(State, f)}
+			{ }
+
+			IStateSimplex(const Simplex<dim>& State, const OptLib::Point<dim+1>& funcVals) :
+				IStateSimplex{assign_values<typename simplex::point_type>(State, funcVals)}
+			{ }
+			
+
+
+
 			const simplex& GuessDomain() const { return ItsGuessDomain; } // unique for direct optimization methods
 			
 			// void UpdateDomain(Simplex<dim>&& State, const FuncInterface::IFunc<dim>*  f)
