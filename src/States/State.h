@@ -29,7 +29,7 @@ namespace OptLib
 			StateSegment(const Simplex<1>& State, const FuncInterface::IFunc<1>* f)
 				:
 				StateInterface::IStateSimplex<1, SimplexValNoSort<1>>(
-					std::move(OrderPointsInSegment(State)), f)
+					OrderPointsInSegment(State), f)
 			{}
 
 		protected:
@@ -57,12 +57,12 @@ namespace OptLib
 			{
 				auto& std = dx;
 				auto var{ abs<dim>(dx / Guess()) };
-				for (int i = 0; i < dim; i++)
+				for (size_t i = 0; i < dim; ++i)
 				{
-					bool f = (((std[i]) < abs_tol) || (var[i] < rel_tol)) && (((std.Val) < abs_tol) || (var.Val < rel_tol));
+					bool f = (std[i] < abs_tol) || (var[i] < rel_tol);
 					if (!f) return false;
 				}
-				return true;
+				return (std.Val < abs_tol) || (var.Val < rel_tol);
 			}
 
 			virtual void UpdateState(const PointVal<dim>& v)
@@ -70,7 +70,6 @@ namespace OptLib
 				dx = abs<dim>(v - Guess());
 				ItsGuess = v;
 			}
-
 		};
 
 		/// <summary>
