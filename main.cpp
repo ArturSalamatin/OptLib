@@ -146,6 +146,13 @@ int main()
         }, 
         &fpp};
 
+    // testing StatePoint
+    ConcreteState::StatePoint<3> state{
+        PointVal<3>{
+            Point<3>{1.0, 2.0, 4.0}, 
+            5.0
+        }
+    };
 
     return 0;
 }
