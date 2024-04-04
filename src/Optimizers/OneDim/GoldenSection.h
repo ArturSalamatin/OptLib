@@ -1,5 +1,15 @@
 #pragma once
-#include "stdafx.h"
+#ifndef GOLDENSECTION_H
+#define GOLDENSECTION_H
+
+#include "../../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../../Points/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "../../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../../Points/SetOfPoints/SetOfPoints.h"
+
+#include "../../Functions/Interface/FuncInterface.h"
+
+#include "../../States/State.h"
 
 namespace OptLib
 {
@@ -15,15 +25,15 @@ namespace OptLib
 			double phi;
 			double resphi;
 
-			StateGoldenSection(SetOfPoints<2, Point<1>>&& State, FuncInterface::IFunc<1>* f)
+			StateGoldenSection(SetOfPoints<2, OptLib::Point<1>>&& State, FuncInterface::IFunc<1>* f)
 				:
 				StateSegment(std::move(State), f)
 			{
 				phi = (1 + std::sqrt(5)) / 2;
 				resphi = 2 - phi;
 
-				AuxPoints[0] = GuessDomain().Points()[0];
-				AuxPoints[3] = GuessDomain().Points()[1];
+				AuxPoints[0] = GuessDomain()[0];
+				AuxPoints[3] = GuessDomain()[1];
 				AuxPoints[1] = FuncInterface::CreateFromPoint<1>(AuxPoints[0].P + resphi * (AuxPoints[3].P - AuxPoints[0].P), f);
 				AuxPoints[2] = FuncInterface::CreateFromPoint<1>(AuxPoints[3].P - resphi * (AuxPoints[3].P - AuxPoints[0].P), f);
 			}
@@ -75,3 +85,5 @@ namespace OptLib
 		};
 	} // StateParams
 } // OptLib
+
+#endif

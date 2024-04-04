@@ -1,5 +1,8 @@
-#pragma once
-#include "stdafx.h"
+#ifndef OPTIMIZERINTERFACE_H
+#define OPTIMIZERINTERFACE_H
+
+#include "../States/StateInterface.h"
+#include "../States/State.h"
 
 namespace OptLib
 {
@@ -63,5 +66,13 @@ namespace OptLib
 		{
 
 		};
+		
+		template<size_t dim>
+		class IGAAlgo : public OptimizerAlgorithm<dim>
+		{
+
+		};
 	} // OptimizerInterface
 } // OptLib
+
+#endif

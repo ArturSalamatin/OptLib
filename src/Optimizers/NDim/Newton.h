@@ -1,5 +1,5 @@
-#pragma once
-#include "stdafx.h"
+#ifndef NEWTON_H
+#define NEWTON_H
 
 namespace OptLib
 {
@@ -86,3 +86,5 @@ namespace OptLib
 		};
 	} // StateParams
 } // OptLib
+
+#endif

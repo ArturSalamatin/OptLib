@@ -1,5 +1,15 @@
-#pragma once
-#include "stdafx.h"
+#ifndef NELDERMEAD_H
+#define NELDERMEAD_H
+
+#include "../../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../../Points/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "../../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../../Points/SetOfPoints/PointVal/PointValOperators.h"
+#include "../../Points/SetOfPoints/SetOfPoints.h"
+
+#include "../../Functions/Interface/FuncInterface.h"
+
+#include "../../States/State.h"
 
 namespace OptLib
 {
@@ -17,7 +27,7 @@ namespace OptLib
 			const double gamma;
 
 		public:
-			StateNelderMead(SetOfPoints<dim+1, Point<dim>>&& State, FuncInterface::IFunc<dim>* f,
+			StateNelderMead(Simplex<dim>&& State, FuncInterface::IFunc<dim>* f,
 				double alpha_, double beta_, double gamma_) : StateDirect<dim>(std::move(State), f),
 				alpha{ alpha_ }, beta{ beta_ }, gamma{ gamma_ }{};
 		};
@@ -89,7 +99,7 @@ namespace OptLib
 		protected:
 			static auto SqueezeSimplex(const Point<dim>& xl, const SetOfPoints<dim + 1, PointVal<dim>>& Simplex)
 			{
-				SetOfPoints<dim + 1, Point<dim>> NewSimplex;
+				Simplex<dim> NewSimplex;
 
 				for (int i = 0; i < dim + 1; i++)
 					NewSimplex[i] = Point<dim>{ std::move(xl + (Simplex[i].P - xl) / 2.0) };
@@ -126,3 +136,5 @@ namespace OptLib
 		};
 	} // StateParams
 }//OptLib
+
+#endif

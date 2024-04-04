@@ -1,5 +1,5 @@
-#pragma once
-#include "stdafx.h"
+#ifndef ANNEALING_H
+#define ANNEALING_H
 
 namespace OptLib
 {
@@ -39,3 +39,5 @@ namespace OptLib
 		};
 	}
 }
+
+#endif

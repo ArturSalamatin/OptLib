@@ -1,5 +1,14 @@
-#pragma once
-#include "stdafx.h"
+#ifndef DICHOTOMY_H
+#define DICHOTOMY_H
+
+#include "../../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../../Points/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "../../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../../Points/SetOfPoints/SetOfPoints.h"
+
+#include "../../Functions/Interface/FuncInterface.h"
+
+#include "../../States/State.h"
 
 namespace OptLib
 {
@@ -10,7 +19,7 @@ namespace OptLib
 		/// </summary>
 		using  StateDichotomy = StateSegment;
 
-	} // ConcreteOptimizer
+	} // ConcreteState
 
 	namespace ConcreteOptimizer
 	{
@@ -19,12 +28,12 @@ namespace OptLib
 		public:
 			static PointVal<1> Proceed(ConcreteState::StateDichotomy& State, const FuncInterface::IFunc<1>* f)
 			{
-				const PointVal<1>& a = State.GuessDomain().Points()[0];
-				const PointVal<1>& b = State.GuessDomain().Points()[1];
+				const PointVal<1>& a = State.GuessDomain()[0];
+				const PointVal<1>& b = State.GuessDomain()[1];
 
 				Point<1> _e{ (b.P - a.P) / 4.0 };
 
-				Point<1> c{ State.GuessDomain().Mean().P };
+				Point<1> c{ State.GuessDomain().mean().P };
 
 				PointVal<1> x1{ FuncInterface::CreateFromPoint<1>(c - _e, f) };
 				PointVal<1> x2{ FuncInterface::CreateFromPoint<1>(c + _e, f) };
@@ -66,3 +75,5 @@ namespace OptLib
 		};
 	} // StateParams
 } // OptLib
+
+#endif
