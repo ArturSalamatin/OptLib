@@ -18,6 +18,9 @@
 
 #include "src/States/State.h"
 
+#include "src/Optimizers/OverallOptimizer.h"
+#include "src/Optimizers/OneDim/Bisection.h"
+
 using namespace OptLib;
 
 /// @brief program entry point
@@ -153,6 +156,29 @@ int main()
             5.0
         }
     };
+
+
+    // test OverallOptimizer
+
+    ConcreteFunc::Paraboloid<1> parab{Hess<1>{2.0}};
+
+    ConcreteState::StateBisection bisect_state{
+                Simplex<1>{
+                    Point<1>{-2.0}, 
+                    Point<1>{2.0}
+                },
+            &parab
+    };
+
+
+    Optimizer<ConcreteState::StateBisection>
+        bisect_opt{
+            &bisect_state,
+            &parab,
+            OptimizerParams{1E-5, 1E-5, 300}
+        };
+    auto result = bisect_opt.Optimize<ConcreteOptimizer::Bisection>();
+
 
     return 0;
 }

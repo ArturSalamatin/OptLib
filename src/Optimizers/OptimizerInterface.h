@@ -27,8 +27,8 @@ namespace OptLib
 			template<
 				typename algo,
 				typename state,
-				template<size_t dim> typename func>
-			static PointVal<dim> Proceed(state* State, const func<dim>* f) { return algo::Proceed(*State, f); }; // continue to next guess. The state is updated
+				typename func>
+			static PointVal<dim> Proceed(state* State, const func* f) { return algo::Proceed(*State, f); }; // continue to next guess. The state is updated
 		};
 
 		template<size_t dim, typename state>

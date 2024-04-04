@@ -11,27 +11,29 @@ namespace OptLib
 		size_t max_iter;
 	};
 
-	template<size_t dim, 
-		typename state, 
-		template<size_t dim> typename func>
+	template<typename state>
 	class Optimizer
 	{
 	public:
+		constexpr static size_t arg_count = state::arg_count;
+		
+		using func = typename state::func_type;
+
 		double tol_f() { return Prm.eps_f; }
 		double tol_x() { return Prm.eps_x; }
 		size_t MaxIterCount() { return Prm.max_iter; }
 		size_t CurIterCount() { return s; }
-		const PointVal<dim>& CurrentGuess() { return State->Guess(); }
+		const PointVal<arg_count>& CurrentGuess() { return State->Guess(); }
 
 	public:
-		Optimizer(state* State_, func<dim>* f_, const OptimizerParams& prm) :
+		Optimizer(state* State_, func* f_, const OptimizerParams& prm) :
 			State{State_},
 			f{f_},
 			Prm{ prm },
 			s{ 0 }{}
 
 		template<typename algo>
-		const PointVal<dim>& Optimize()
+		const PointVal<arg_count>& Optimize()
 		{
 #ifdef DEBUG_LIB
 			std::cout << "Optimization started...\n";
@@ -45,9 +47,9 @@ namespace OptLib
 #ifdef DEBUG_LIB
 				std::cout << "Current state: " << State->Guess() << "\n";
 #endif // DEBUG_LIB
-				OptimizerInterface::OptimizerAlgorithm<dim>::Proceed<algo, state, func>(State, f);
+				OptimizerInterface::OptimizerAlgorithm<arg_count>::Proceed<algo, state, func>(State, f);
 				++s;
-				g = OptimizerInterface::OptimizerAlgorithm<dim>::IsConverged(State, tol_x(), tol_x());
+				g = OptimizerInterface::OptimizerAlgorithm<arg_count>::IsConverged(State, tol_x(), tol_x());
 			}
 #ifdef DEBUG_LIB
 			std::cout << "Optimization ended\n";
@@ -59,7 +61,7 @@ namespace OptLib
 		}
 
 		template<typename algo>
-		PointVal<dim> Continue(double eps_x, double eps_f)
+		PointVal<arg_count> Continue(double eps_x, double eps_f)
 		{
 			Prm.eps_f = eps_f;
 			Prm.eps_x = eps_x;
@@ -68,7 +70,7 @@ namespace OptLib
 
 	protected:
 		state* State;
-		func<dim>* f;
+		func* f;
 
 		int s; // current number of iterations
 		OptimizerParams Prm;

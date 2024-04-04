@@ -72,7 +72,7 @@ namespace OptLib
     template <size_t dim>
     auto sqrt(const PointVal<dim> &p)
     {
-        assert(p.Val > 0.0);
+        assert(p.Val >= 0.0);
         assert(
             std::none_of(
                 p.P.cbegin(), 

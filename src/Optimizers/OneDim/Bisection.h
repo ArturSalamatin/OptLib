@@ -5,6 +5,7 @@
 #include "../../Points/SetOfPoints/PointVal/Point/Point.h"
 #include "../../Points/SetOfPoints/PointVal/PointVal.h"
 #include "../../Points/SetOfPoints/SetOfPoints.h"
+#include "../../Points/Definitions.h"
 
 #include "../../Functions/Interface/FuncInterface.h"
 
@@ -15,15 +16,14 @@ namespace OptLib
 {
 	namespace ConcreteState
 	{
-		/// <summary>
-		/// Simplexes for direct methods on segments (in 1D) must not be sorted with respect to f(x). Must be sorted with respect to x == x[0]
-		/// </summary>
+		/// @brief Simplexes for direct methods on segments (in 1D) must not be sorted with respect to f(x). 
+		/// Must be sorted with respect to x == x[0]
 		class StateBisection : public StateSegment
 		{
 		public:
 			SetOfPoints<5, PointVal<1>> AuxPoints;
 
-			StateBisection(SetOfPoints<2, OptLib::Point<1>>&& State, FuncInterface::IFunc<1>* f)
+			StateBisection(Simplex<1>&& State, FuncInterface::IFunc<1>* f)
 				:
 				StateSegment(std::move(State), f)
 			{
@@ -119,8 +119,8 @@ namespace OptLib
 			using StateType = OptLib::ConcreteState::StateBisection;
 
 		public:
-			SetOfPoints<2, Point<1>> StartSegment;
-			BisectionParams(SetOfPoints<2, Point<1>>&& sop)
+			Simplex<1> StartSegment;
+			BisectionParams(Simplex<1>&& sop)
 				:StartSegment{ std::move(sop) }
 			{}
 			StateType CreateState(FuncInterface::IFunc<1>* f)
