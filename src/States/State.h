@@ -95,7 +95,13 @@ namespace OptLib
 				return x;
 			}
 			PointVal<dim> bestGuess;
-			StateStochastic(OptLib::Point<dim>&& State, FuncInterface::IFunc<dim>* f, double initialTemperature, double (*TemperatureFunction) (double, int), double step, double temperature_end) :
+			StateStochastic(
+				OptLib::Point<dim>&& State, 
+				FuncInterface::IFunc<dim>* f, 
+				double initialTemperature, 
+				double (*TemperatureFunction) (double, int), 
+				double step, 
+				double temperature_end) :
 				//StateInterface::IState<dim>(std::move(State), f), 
 				temperature{ initialTemperature }, Temperature{ TemperatureFunction }, h{ step }, endTemperature{ temperature_end },iteration{ 0 } 
 			{
@@ -104,9 +110,9 @@ namespace OptLib
 			}
 			bool IsConverged(double endTemperature, double) const override
 			{
-				return temperature > endTemperature ? false : true;
+				return temperature < endTemperature;
 			}
-			void ChangeGuess(PointVal<dim> currentGuess) {
+			void ChangeGuess(const PointVal<dim>& currentGuess) {
 				ItsGuess = currentGuess;
 			}
 			void UpdateState()
