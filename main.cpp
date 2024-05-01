@@ -2,6 +2,8 @@
 #include <array>
 #include <functional>
 
+#include "Config.h"
+
 #include "src/Points/SetOfPoints/PointVal/Point/Point.h"
 #include "src/Points/SetOfPoints/PointVal/Point/PointOperators.h"
 
@@ -14,6 +16,10 @@
 #include "src/Points/SetOfPointVals.h"
 
 #include "src/Functions/Function.h"
+#include "src/Functions/Paraboloid.h"
+#include "src/Functions/Himmel.h"
+#include "src/Functions/Rozenbrock.h"
+#include "src/Functions/FuncAlongGradDirection.h"
 #include "src/Functions/FunctionParam.h"
 
 #include "src/States/State.h"
@@ -25,8 +31,16 @@ using namespace OptLib;
 
 /// @brief program entry point
 /// @return code of execution result
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc < 2)
+    {
+        // report version
+        std::cout << argv[0] << " Version " << OptLib_VERSION_MAJOR << "."
+                  << OptLib_VERSION_MINOR << std::endl;
+        std::cout << "Usage: " << argv[0] << " number" << std::endl;
+    }
+
     // testing Point ctors
     auto rp1{Point<3>{1.0, 2.0, 3.0}};
     auto rp2 = rp1;
@@ -106,11 +120,9 @@ int main()
     ConcreteFunc::FuncAlongGradDirection<2> f{&Him, Point<2>{2.0, 1.0}};
     auto gr{f.grad(Point<1>{3.0})};
 
-
     // testing FunctionParam
     auto fp{ConcreteFuncParam::LinearFuncWithGrad{}};
     fp(Point<1>{1.0}, Point<1>{2.0});
-
 
     // testing State
     Simplex<1> simpl{Point<1>{1.0}, Point<1>{3.0}};
@@ -118,67 +130,54 @@ int main()
 
     ConcreteState::StatePoint<3> stp{
         PointVal<3>{
-            Point<3>{1.0, 2.0, 4.0}, 
-            5.0
-        }
-    };
+            Point<3>{1.0, 2.0, 4.0},
+            5.0}};
 
     Simplex<3> simpl2{
-        Point<3>{1.0, 1.0, 2.5}, 
-        Point<3>{3.0, 2.0,5.6},
-        Point<3>{1.0, 7.0, 2.5}, 
-        Point<3>{12.0, 2.0,5.6}};
+        Point<3>{1.0, 1.0, 2.5},
+        Point<3>{3.0, 2.0, 5.6},
+        Point<3>{1.0, 7.0, 2.5},
+        Point<3>{12.0, 2.0, 5.6}};
 
     ConcreteFunc::Paraboloid<3> fpp{
         Hess<3>{
             Point<3>{1.0, 2.0, 3.0},
             Point<3>{1.0, 16.0, 3.0},
-            Point<3>{1.0, 2.0, 7.0}
-        }
-    };
+            Point<3>{1.0, 2.0, 7.0}}};
 
     // by copy-ctor
     ConcreteState::StateDirect<3> state_direct{simpl2, &fpp};
     // by move-ctro
     ConcreteState::StateDirect<3> state_direct2{
         Simplex<3>{
-            Point<3>{1.0, 1.0, 2.5}, 
-            Point<3>{3.0, 2.0,5.6},
-            Point<3>{1.0, 7.0, 2.5}, 
-            Point<3>{12.0, 2.0,5.6}
-        }, 
+            Point<3>{1.0, 1.0, 2.5},
+            Point<3>{3.0, 2.0, 5.6},
+            Point<3>{1.0, 7.0, 2.5},
+            Point<3>{12.0, 2.0, 5.6}},
         &fpp};
 
     // testing StatePoint
     ConcreteState::StatePoint<3> state{
         PointVal<3>{
-            Point<3>{1.0, 2.0, 4.0}, 
-            5.0
-        }
-    };
-
+            Point<3>{1.0, 2.0, 4.0},
+            5.0}};
 
     // test OverallOptimizer
 
     ConcreteFunc::Paraboloid<1> parab{Hess<1>{2.0}};
 
     ConcreteState::StateBisection bisect_state{
-                Simplex<1>{
-                    Point<1>{-2.0}, 
-                    Point<1>{2.0}
-                },
-            &parab
-    };
-
+        Simplex<1>{
+            Point<1>{-2.0},
+            Point<1>{2.0}},
+        &parab};
 
     Optimizer<ConcreteState::StateBisection>
         bisect_opt{
             &bisect_state,
             &parab,
-            OptimizerParams{1E-5, 1E-5, 300}
-        };
+            OptimizerParams{1E-5, 1E-5, 300}};
     auto result = bisect_opt.Optimize<ConcreteOptimizer::Bisection>();
-
 
     return 0;
 }
