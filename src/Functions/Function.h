@@ -149,35 +149,6 @@ namespace OptLib
 		};
 
 		template <size_t dim>
-		class FuncAlongGradDirection : public FuncInterface::IFuncWithGrad<1>
-		{
-		public:
-			FuncAlongGradDirection(
-				const FuncInterface::IFuncWithGrad<dim>* const f_pointer, 
-				const Point<dim> &x0_) noexcept : 
-				x0{x0_}, grad0{f_pointer->grad(x0_)}, f{*f_pointer} 
-				{}
-
-			double operator()(const Point<1> &gamma) const override
-			{
-				return f(x0 - grad0 * gamma[0]);
-			}
-
-			Point<1> grad(const Point<1> &gamma) const override
-			{
-				Point<dim> gr = f.grad(x0 - grad0 * gamma[0]);
-
-				return Point<1>{-dot_product(gr, grad0)};
-			}
-
-		protected:
-			Point<dim> x0;
-			Grad<dim> grad0;
-
-			const FuncInterface::IFuncWithGrad<dim>& f; // function to optimize
-		};
-
-		template <size_t dim>
 		class Func : public FuncInterface::IFunc<dim>
 		{
 		public:
@@ -199,74 +170,6 @@ namespace OptLib
 				return res;
 			}
 		};
-
-		class Himmel : public FuncInterface::IFuncWithHess<2>
-		{
-		public:
-			Himmel()
-			{
-#ifdef DEBUG_LIB
-				std::cout << "Himmel funcion  has been created.\n";
-				std::cout << "f(3,2) = " << this->operator()(Point<2>{3, 2}) << '\n';
-				std::cout << "f(-2.805118,3.131312) = " << this->operator()(Point<2>{-2.805118, 3.131312}) << '\n';
-				std::cout << "f(-3.779310,-3.283186) = " << this->operator()(Point<2>{-3.779310, -3.283186}) << '\n';
-				std::cout << "f(3.584428,-1.848126) = " << this->operator()(Point<2>{3.584428, -1.848126}) << '\n';
-#endif // DEBUG_LIB
-			}
-			double operator()(const Point<2> &x) const override
-			{
-				return std::pow(x[0] * x[0] + x[1] - 11.0, 2.0) + std::pow(x[0] + x[1] * x[1] - 7.0, 2.0);
-			}
-
-			Point<2> grad(const Point<2> &x) const override
-			{
-				return Point<2>{
-					4.0 * x[0] * x[0] * x[0] + 
-					4.0 * x[0] * x[1] - 
-					42.0 * x[0] + 
-					2.0 * x[1] * x[1] - 14.0, 
-
-					2.0 * x[0] * x[0] - 22.0 + 
-					4.0 * x[0] * x[1] + 
-					4.0 * x[1] * x[1] * x[1] - 
-					26.0 * x[1]};
-			}
-
-			Hess<2> hess(const Point<2> &x) const override
-			{
-				return Hess<2>{Grad<2>{12.0 * x[0] * x[0] + 4 * x[1] - 42.0, 4.0 * x[0] + 4.0 * x[1]},
-								Grad<2>{4.0 * x[0] + 4.0 * x[1], 4.0 * x[0] + 12.0 * x[1] * x[1] - 26.0}};
-			}
-		};
-
-		class Rozenbrok : public FuncInterface::IFuncWithHess<2>
-		{
-		public:
-			Rozenbrok()
-			{
-#ifdef DEBUG_LIB
-				std::cout << "Rozenbrok funcion has been instantiated.\n";
-				std::cout << "f(1,1) = " << this->operator()(Point<2>{1, 1}) << '\n';
-#endif // DEBUG_LIB
-			}
-			double operator()(const Point<2> &x) const override
-			{
-				return std::pow((1 - x[0]), 2) + 100 * std::pow(x[1] - x[0] * x[0], 2);
-			}
-
-			Grad<2> grad(const Point<2> &x) const override
-			{
-				return Grad<2>{-2 * x[0] * (1 - x[0] + 200 * (x[1] - x[0] * x[0])), 200 * (x[1] - x[0] * x[0])};
-			}
-
-			Hess<2> hess(const Point<2> &x) const override
-			{
-				return Hess<2>{Grad<2>{-2.0 * (1.0 - x[0] + 200.0 * (x[1] - x[0] * x[0])) - 2.0 * x[0] * (-1.0 - 400.0 * x[0]),
-								 -400.0 * x[0]},
-								Grad<2>{-400.0 * x[0], 200.0}};
-			}
-		};
-
 	} // ConcreteFuncs
 } // OptLib
 
