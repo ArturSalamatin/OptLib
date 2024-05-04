@@ -1,6 +1,11 @@
 #ifndef PARABOLOID_H
 #define PARABOLOID_H
 
+#include "Interface/FuncInterface.h"
+#include "../Points/SetOfPoints/PointVals/Point/PointOperators.h"
+#include "../Points/SetOfPointVals.h"
+#include "../Points/SetOfPoints/SetOfPointOperators.h"
+
 namespace OptLib
 {
     namespace ConcreteFunc

@@ -1,8 +1,8 @@
 #ifndef FUNCTION_H
 #define FUNCTION_H
 
-#include "../Points/SetOfPoints/PointVal/Point/Point.h"
-#include "../Points/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "../Points/SetOfPoints/PointVals/Point/Point.h"
+#include "../Points/SetOfPoints/PointVals/Point/PointOperators.h"
 #include "../Points/SetOfPoints/SetOfPoints.h"
 #include "Interface/FuncInterface.h"
 

@@ -1,9 +1,8 @@
-#pragma once
 #ifndef BISECTION_H
 #define BISECTION_H
 
-#include "../../Points/SetOfPoints/PointVal/Point/Point.h"
-#include "../../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../../Points/SetOfPoints/PointVals/Point/Point.h"
+#include "../../Points/SetOfPoints/PointVals/PointVal.h"
 #include "../../Points/SetOfPoints/SetOfPoints.h"
 #include "../../Points/Definitions.h"
 
@@ -16,6 +15,7 @@ namespace OptLib
 {
 	namespace ConcreteState
 	{
+
 		/// @brief Simplexes for direct methods on segments (in 1D) must not be sorted with respect to f(x). 
 		/// Must be sorted with respect to x == x[0]
 		class StateBisection : public StateSegment
@@ -56,37 +56,37 @@ namespace OptLib
 				if (pos == 0)
 				{// keep AuxPoints[0]
 					AuxPoints[4] = AuxPoints[1];
-					temp2(State, f);
+					helper2(State, f);
 				}
 				else if (pos == AuxPoints.size() - 1)
 				{// keep AuxPoints[4]
 					AuxPoints[0] = AuxPoints[3];
-					temp2(State, f);
+					helper2(State, f);
 				}
 				else if(pos == 1)
 				{
 					AuxPoints[4] = AuxPoints[2];
 					AuxPoints[2] = AuxPoints[1];
-					temp1(State, f);
+					helper1(State, f);
 				}
 				else if (pos == 2)
 				{
 					AuxPoints[0] = AuxPoints[1];
 					AuxPoints[4] = AuxPoints[3];
-					temp1(State, f);
+					helper1(State, f);
 				}
 				else
 				{
 					AuxPoints[0] = AuxPoints[2];
 					AuxPoints[2] = AuxPoints[3];
-					temp1(State, f);
+					helper1(State, f);
 				}
 				State.SetDomain({ AuxPoints[0], AuxPoints[4]});
 				return State.Guess();
 			}
 
 		protected:
-			static void temp1(ConcreteState::StateBisection& State, const FuncInterface::IFunc<1>* f)
+			static void helper1(ConcreteState::StateBisection& State, const FuncInterface::IFunc<1>* f)
 			{
 				SetOfPoints<5, PointVal<1>>& AuxPoints = State.AuxPoints;
 
@@ -96,7 +96,7 @@ namespace OptLib
 				x = Point<1>{ AuxPoints[2].P[0] + step };
 				AuxPoints[3] = PointVal{ x, (*f)(x) };
 			}
-			static void temp2(ConcreteState::StateBisection& State, const FuncInterface::IFunc<1>* f)
+			static void helper2(ConcreteState::StateBisection& State, const FuncInterface::IFunc<1>* f)
 			{
 				SetOfPoints<5, PointVal<1>>& AuxPoints = State.AuxPoints;
 
@@ -109,27 +109,6 @@ namespace OptLib
 			}
 		};
 	} // Optimizer
-
-	namespace StateParams
-	{
-		struct BisectionParams
-		{
-		public:
-			using OptAlgo = OptLib::ConcreteOptimizer::Bisection;
-			using StateType = OptLib::ConcreteState::StateBisection;
-
-		public:
-			Simplex<1> StartSegment;
-			BisectionParams(Simplex<1>&& sop)
-				:StartSegment{ std::move(sop) }
-			{}
-			StateType CreateState(FuncInterface::IFunc<1>* f)
-			{
-				return { std::move(StartSegment), f };
-			}
-		};
-	} // StateParams
-
 } // OptLib
 
 #endif

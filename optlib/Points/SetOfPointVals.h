@@ -1,7 +1,7 @@
 #ifndef SETOFPOINTVALS_H
 #define SETOFPOINTVALS_H
 
-#include "SetOfPoints/PointVal/Point/Point.h"
+#include "SetOfPoints/PointVals/Point/Point.h"
 #include "SetOfPoints/SetOfPoints.h"
 
 namespace OptLib

@@ -30,7 +30,8 @@ namespace OptLib
 			State{State_},
 			f{f_},
 			Prm{ prm },
-			s{ 0 }{}
+			s{ 0 }
+			{}
 
 		template<typename algo>
 		const PointVal<arg_count>& Optimize()
@@ -72,7 +73,7 @@ namespace OptLib
 		state* State;
 		func* f;
 
-		int s; // current number of iterations
+		size_t s; // current number of iterations
 		OptimizerParams Prm;
 	};
 

@@ -1,7 +1,8 @@
 #ifndef SETOFPOINTSOPERATORS_H
 #define SETOFPOINTSOPERATORS_H
 
-#include "PointVal/Point/Point.h"
+#include "PointVals/Point/Point.h"
+#include "PointVals/Point/PointOperators.h"
 #include "SetOfPoints.h"
 
 namespace OptLib

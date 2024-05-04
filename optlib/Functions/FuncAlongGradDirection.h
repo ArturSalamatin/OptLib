@@ -1,7 +1,7 @@
 #ifndef FUNCALONGGRADDIRECTION_H
 #define FUNCALONGGRADDIRECTION_H
 
-#include "../Points/SetOfPoints/PointVal/Point/PointOperators.h"
+#include "../Points/SetOfPoints/PointVals/Point/PointOperators.h"
 #include "Interface/FuncInterface.h"
 
 namespace OptLib

@@ -1,8 +1,8 @@
 #ifndef STATEINTERFACE_H
 #define STATEINTERFACE_H
 
-#include "../Points/SetOfPoints/PointVal/Point/Point.h"
-#include "../Points/SetOfPoints/PointVal/PointVal.h"
+#include "../Points/SetOfPoints/PointVals/Point/Point.h"
+#include "../Points/SetOfPoints/PointVals/PointVal.h"
 #include "../Points/SetOfPoints/SetOfPoints.h"
 #include "../Points/Definitions.h"
 

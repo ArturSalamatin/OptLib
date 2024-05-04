@@ -2,7 +2,7 @@
 #define FUNCPARAMINTERFACE_H
 
 #include <array>
-#include "../../Points/SetOfPoints/PointVal/Point/Point.h"
+#include "../../Points/SetOfPoints/PointVals/Point/Point.h"
 #include "../../Points/SetOfPoints/SetOfPoints.h"
 #include "FuncInterface.h"
 

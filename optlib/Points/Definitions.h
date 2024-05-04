@@ -1,8 +1,8 @@
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
-#include "SetOfPoints/PointVal/Point/Point.h"
-#include "SetOfPoints/PointVal/PointVal.h"
+#include "SetOfPoints/PointVals/Point/Point.h"
+#include "SetOfPoints/PointVals/PointVal.h"
 #include "SetOfPoints/SetOfPoints.h"
 #include "SetOfPointVals.h"
 

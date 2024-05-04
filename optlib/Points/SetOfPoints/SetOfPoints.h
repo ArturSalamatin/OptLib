@@ -2,6 +2,7 @@
 #define SETOFPOINTS_H
 
 #include <array>
+#include <tuple>
 #include <algorithm>
 
 namespace OptLib
