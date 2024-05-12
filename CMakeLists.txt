@@ -1,5 +1,6 @@
 # https://coderefinery.github.io/cmake-workshop/
 # https://cliutils.gitlab.io/modern-cmake/
+# https://cmake.org/cmake/help/v3.19/index.html
 
 cmake_minimum_required(VERSION 3.8.0)
 
