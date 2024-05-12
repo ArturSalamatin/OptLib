@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.8.0)
 # Every project needs a name.  We call this the "examples" project.
 project(examples)
 # Header files are located in the following folder.
-# So, <optlib/xxx.h> can be called
+# So, <optlib/xxx.h> can be called within te examples project
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
 
 # Tell cmake we will need dlib.  This command will pull in dlib and compile it

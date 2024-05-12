@@ -1,3 +1,6 @@
+# https://coderefinery.github.io/cmake-workshop/
+
+
 cmake_minimum_required(VERSION 3.8.0)
 
 project(OptLib
@@ -6,34 +9,27 @@ project(OptLib
 # set languages used in the project
     LANGUAGES C CXX)
 
+# Sepcify standard ABOVE the call to add_executable
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+
+# specify where to place binaries and libraries
+# so they end up in standard places with "make install"
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
+
+
 # parallel build with MSVC compiler
 # if(MSVC AND MSVC_VERSION GREATER 1400)
 #     add_compile_options(/MP)
 # endif()
 
-# Sepcify standard ABOVE the call to add_executable
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
-
-# get_directory_property(has_parent PARENT_DIRECTORY)
-# if(NOT has_parent)
-#    # When you call add_subdirectory(dlib) from a parent CMake project dlib's
-#    # CMake scripts will assume you want to statically compile dlib into
-#    # whatever you are building rather than create a standalone copy of dlib.
-#    # This means CMake will build dlib as a static library, disable dlib's
-#    # install targets so they don't clutter your project, and adjust a few other
-#    # minor things that are convenient when statically building dlib as part of
-#    # your own projects.
-#    #
-#    # On the other hand, if there is no parent CMake project or if
-#    # DLIB_IN_PROJECT_BUILD is set to false, CMake will compile dlib as a normal
-#    # standalone library (either shared or static, based on the state of CMake's
-#    # BUILD_SHARED_LIBS flag), and include the usual install targets so you can
-#    # install dlib on your computer via `make install`.  Since the only reason
-#    # to build this CMakeLists.txt (the one you are reading right now) by itself
-#    # is if you want to install dlib, we indicate as such by setting
-#    # DLIB_IN_PROJECT_BUILD to false.
-#    set(DLIB_IN_PROJECT_BUILD false)
-# endif()
-
+# process examples/CMakeLists.txt
 add_subdirectory(examples)
+
+# enable testing
+enable_testing()
+# process test/CMakeLists.txt
+add_subdirectory(test)
