@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.8.0)
 # Every project needs a name.  We call this the "examples" project.
 project(examples)
-# Header files are located in the following folder.
-# So, <optlib/xxx.h> can be called within te examples project
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
 
 # Tell cmake we will need dlib.  This command will pull in dlib and compile it
 # into your project.  Note that you don't need to compile or install dlib.  All
@@ -16,6 +13,9 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..")
 macro(add_example name)
    add_executable(${name} ${name}.cpp)
  #  target_link_libraries(${name} optlib::optlib)
+# Header files are located in the following folder.
+# So, <optlib/xxx.h> can be called within te examples project
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
    target_include_directories(${name} PUBLIC "${PROJECT_SOURCE_DIR}/..")
 
    # if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.13.0") 
