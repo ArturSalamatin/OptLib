@@ -2,7 +2,7 @@
 # https://cliutils.gitlab.io/modern-cmake/
 # https://cmake.org/cmake/help/v3.19/index.html
 
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.14.0)
 
 project(OptLib
 # set the build version

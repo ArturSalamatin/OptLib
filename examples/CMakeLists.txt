@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8.0)
+cmake_minimum_required(VERSION 3.14.0)
 # Every project needs a name.  We call this the "examples" project.
 project(examples)
 
@@ -12,18 +12,51 @@ project(examples)
 # your cmake projects and use the syntax shown above.
 macro(add_example name)
    add_executable(${name} ${name}.cpp)
- #  target_link_libraries(${name} optlib::optlib)
-# Header files are located in the following folder.
-# So, <optlib/xxx.h> can be called within te examples project
-# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
+  # Header files are located in the following folder.
+  # So, <optlib/xxx.h> can be called within te examples project
+  # include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
    target_include_directories(${name} PUBLIC "${PROJECT_SOURCE_DIR}/..")
 
-   # if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.13.0") 
-   # # And strip symbols to make your binary smaller if you like.  Certainly not
-   # # required though.
-   #     target_link_options(${name} PRIVATE $<$<CONFIG:RELEASE>:-s>)
-   # endif()
+   # this is here because the config.h will be generated in PROJECT_BINARY_DIR
+   target_include_directories(${name}
+  PRIVATE
+    ${PROJECT_BINARY_DIR}
+  )
+
+  # let the preprocessor know about the system name
+  # let the preprocessor know about the system name
+  if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_compile_definitions(${name} PUBLIC "IS_LINUX")
+  endif()
+  if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+  target_compile_definitions(${name} PUBLIC "IS_MACOS")
+  endif()
+  if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  target_compile_definitions(${name} PUBLIC "IS_WINDOWS")
+  endif()
+
+
+  
+find_package(OpenMP REQUIRED COMPONENTS CXX)
+
 endmacro()
+
+# include(CMakePrintHelpers)
+# foreach(key
+#   IN ITEMS
+#     NUMBER_OF_LOGICAL_CORES
+#     NUMBER_OF_PHYSICAL_CORES
+#     IS_64BIT
+#     HAS_SSE2
+#     OS_NAME
+#     OS_RELEASE
+#   )
+#   # query the item ${key} and save its value in the variable _${key}
+#   cmake_host_system_information(RESULT _${key} QUERY ${key})
+#   cmake_print_variables(_${key})
+# endforeach()
+
+# configure_file(config-template.h config.h @ONLY)
 
 add_example(points_ex)
 add_example(pointvals_ex)
