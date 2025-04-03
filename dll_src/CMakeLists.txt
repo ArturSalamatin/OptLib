@@ -38,3 +38,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(MyApp main.cpp)
 
 target_link_libraries(MyApp ${CMAKE_SOURCE_DIR}/OperatorManagerWrapper.lib)
+
+# a library may be lnked to the target 
+# target_link_libraries(${PROJECT_NAME} PUBLIC MyApp)
