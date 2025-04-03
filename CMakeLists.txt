@@ -23,6 +23,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 add_subdirectory(deps/gtest)
 add_subdirectory(deps/eigen)
 
+add_subdirectory(dll_src)
+
 # specify where to place binaries and libraries
 # so they end up in standard places with "make install"
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
