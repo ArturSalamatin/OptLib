@@ -2,6 +2,10 @@
 # https://cliutils.gitlab.io/modern-cmake/
 # https://cmake.org/cmake/help/v3.19/index.html
 
+# to add submodule
+# git submodule add https://github.com/google/googletest deps/gtest/
+# git submodule add https://gitlab.com/libeigen/eigen deps/eigen/
+
 cmake_minimum_required(VERSION 3.14.0)
 
 project(OptLib
@@ -15,12 +19,14 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
+add_subdirectory(deps/gtest)
+add_subdirectory(deps/eigen)
+
 # specify where to place binaries and libraries
 # so they end up in standard places with "make install"
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR})
-
 
 # parallel build with MSVC compiler
 # if(MSVC AND MSVC_VERSION GREATER 1400)
