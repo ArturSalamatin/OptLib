@@ -6,17 +6,27 @@
 
 using namespace OptLib;
 
-int main() try
+// Tests factorial of 0.
+TEST(PointTest, TestCtors)
 {
-    // testing Point ctors
-    auto rp1{Point<3>{1.0, 2.0, 3.0}};
-    auto rp2 = rp1;
-    auto rp3 = Point<3>{1.0, 2.0, 3.0};
-    auto rp4{std::move(rp2)};
-    auto rp5 = std::move(rp4);
-    Point<3> rp6{2.0, 1.0, 3.0};
+    try
+    {
+        Point<3> rp{1.0, 2.0, 3.0};
+        auto rp1{Point<3>{1.0, 2.0, 3.0}};
+        auto rp2 = rp1;
+        auto rp3 = Point<3>{1.0, 2.0, 3.0};
+        auto rp4{std::move(rp2)};
+        auto rp5 = std::move(rp4);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
 
-    // testing Point operators
+TEST(PointTest, TestOperators)
+{
+    Point<3> rp6{2.0, 1.0, 3.0};
     std::cout << rp6 << std::endl;
     rp6 += 3.0;
     rp6 -= 3.0;
@@ -38,12 +48,10 @@ int main() try
     auto dp1{dot_product(rp7, rp8)};
     auto dp2{norm(rp7)};
     auto dp3{dist(rp7, rp8)};
-    
-    std::getchar();
-
-    return 0;
 }
-catch(std::exception& e)
+
+int main(int argc, char **argv) 
 {
-    std::cout << e.what() << std::endl;
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }

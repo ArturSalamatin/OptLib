@@ -1,7 +1,6 @@
-#
-# This is a CMake makefile.  You can find the cmake utility and
-# information about it at http://www.cmake.org
-#
+
+# https://google.github.io/googletest/primer.html
+
 
 cmake_minimum_required(VERSION 3.14.0)
 
