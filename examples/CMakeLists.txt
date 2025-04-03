@@ -24,7 +24,6 @@ macro(add_example name)
   )
 
   # let the preprocessor know about the system name
-  # let the preprocessor know about the system name
   if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   target_compile_definitions(${name} PUBLIC "IS_LINUX")
   endif()
@@ -35,9 +34,7 @@ macro(add_example name)
   target_compile_definitions(${name} PUBLIC "IS_WINDOWS")
   endif()
 
-
-  
-find_package(OpenMP REQUIRED COMPONENTS CXX)
+# find_package(OpenMP REQUIRED COMPONENTS CXX)
 
 endmacro()
 
