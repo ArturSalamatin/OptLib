@@ -1,5 +1,7 @@
 
 # https://google.github.io/googletest/primer.html
+# https://habr.com/ru/articles/667880/
+# https://habr.com/ru/articles/119090/
 
 
 cmake_minimum_required(VERSION 3.14.0)
@@ -30,7 +32,11 @@ macro(add_google_test name)
   )
   target_include_directories(
     ${TEST_NAME} PRIVATE 
-      "${CMAKE_CURRENT_SOURCE_DIR}/../eigen"
+      "${CMAKE_CURRENT_SOURCE_DIR}/../deps/eigen"
+  )
+  target_include_directories(
+    ${TEST_NAME} PRIVATE 
+      "${CMAKE_CURRENT_SOURCE_DIR}/../deps/gtest"
   )
   target_link_libraries(
     ${TEST_NAME} PRIVATE
