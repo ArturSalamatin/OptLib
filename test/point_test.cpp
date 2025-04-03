@@ -2,6 +2,8 @@
 #include <optlib/Points/SetOfPoints/PointVals/Point/Point.h>
 #include <optlib/Points/SetOfPoints/PointVals/Point/PointOperators.h>
 
+#include <gtest/gtest.h>
+
 using namespace OptLib;
 
 int main() try
