@@ -26,12 +26,27 @@ namespace OptLib
     {
         return PointVal<dim>{lhs.P + rhs.P, lhs.Val + rhs.Val};
     }
+    template<size_t dim>
+	auto& operator += (PointVal<dim>& p, double a)
+	{
+        p.P += a;
+        p.Val += a;
+		return p;
+	}
 
     /// elementwise subtraction of vector - vector
     template <size_t dim>
     auto operator-(const PointVal<dim> &lhs, const PointVal<dim> &rhs)
     {
         return PointVal<dim>{lhs.P - rhs.P, lhs.Val - rhs.Val};
+    }
+    /// elementwise subtraction of vector - vector
+    template <size_t dim>
+    auto operator-=(PointVal<dim> &p, double a)
+    {
+        p.P -= a;
+        p.Val -= a;
+		return p;
     }
     /// elementwise multiplication of vector * vector
     template <size_t dim>
