@@ -75,5 +75,6 @@ macro(add_google_test name)
 endmacro()
 
 add_google_test(point_test)
+add_google_test(pointval_test)
 
 
