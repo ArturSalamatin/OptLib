@@ -14,7 +14,7 @@ project(OptLib
 # set languages used in the project
     LANGUAGES C CXX)
 
-# Sepcify standard ABOVE the call to add_executable
+# Specify standard ABOVE the call to add_executable
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
