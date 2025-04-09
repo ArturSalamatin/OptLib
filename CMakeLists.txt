@@ -23,7 +23,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 add_subdirectory(deps/gtest)
 add_subdirectory(deps/eigen)
 
-add_subdirectory(dll_src)
+add_subdirectory(dll_example)
 
 # specify where to place binaries and libraries
 # so they end up in standard places with "make install"
@@ -40,6 +40,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}
 add_subdirectory(examples)
 
 # enable testing
+# sets the variable BUILD_TESTING =ON
 enable_testing()
 # process test/CMakeLists.txt
-add_subdirectory(test)
+if(BUILD_TESTING)
+    add_subdirectory(test)
+endif()
