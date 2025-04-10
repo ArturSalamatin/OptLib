@@ -20,7 +20,6 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 
 # build CMakeLists in subdirectories
-add_subdirectory(deps/gtest)
 add_subdirectory(deps/eigen)
 
 # specify where to place binaries and libraries
