@@ -2,11 +2,11 @@
 #include <optlib/Points/SetOfPoints/PointVals/PointVal.h>
 #include <optlib/Points/SetOfPoints/PointVals/PointValOperators.h>
 
-#include <gtest/gtest.h>
+#include <catch2/catch_test_macros.hpp>
 
 using namespace OptLib;
 
-TEST(PointValTest, TestCtors)
+TEST_CASE("PointValTest1", "TestCtors")
 {
     PointVal<3> rp;
     rp[1] = 2.4;
@@ -17,7 +17,7 @@ TEST(PointValTest, TestCtors)
     auto rp5 = std::move(rp4);
 }
 
-TEST(PointValTest, TestOperators)
+TEST_CASE("PointValTest2", "TestOperators")
 {
     PointVal<3> rp6{{2.0, 1.0, 3.0}, 7.8};
     std::cout << rp6 << std::endl;
@@ -41,8 +41,8 @@ TEST(PointValTest, TestOperators)
     // auto dp3{dist(rp7, rp8)};
 }
 
-int main(int argc, char **argv)
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+// int main(int argc, char **argv)
+// {
+//     testing::InitGoogleTest(&argc, argv);
+//     return RUN_ALL_TESTS();
+// }

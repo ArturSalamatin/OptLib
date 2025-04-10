@@ -2,12 +2,12 @@
 #include <optlib/Points/SetOfPoints/PointVals/Point/Point.h>
 #include <optlib/Points/SetOfPoints/PointVals/Point/PointOperators.h>
 
-#include <gtest/gtest.h>
+#include <catch2/catch_test_macros.hpp>
 
 using namespace OptLib;
 
 // Tests factorial of 0.
-TEST(PointTest, TestCtors)
+TEST_CASE("PointTest1", "TestCtors")
 {
     try
     {
@@ -24,7 +24,7 @@ TEST(PointTest, TestCtors)
     }
 }
 
-TEST(PointTest, TestOperators)
+TEST_CASE("PointTest2", "TestOperators")
 {
     Point<3> rp6{2.0, 1.0, 3.0};
     std::cout << rp6 << std::endl;
@@ -50,8 +50,8 @@ TEST(PointTest, TestOperators)
     auto dp3{dist(rp7, rp8)};
 }
 
-int main(int argc, char **argv) 
-{
-    testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
+// int main(int argc, char **argv) 
+// {
+//     testing::InitGoogleTest(&argc, argv);
+//     return RUN_ALL_TESTS();
+// }
