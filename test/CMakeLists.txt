@@ -8,7 +8,7 @@ cmake_minimum_required(VERSION 3.14.0)
 
 # create a variable called target_name and set it to the string "dtest"
 set (target_name optlib_test)
-PROJECT(${target_name})
+project(${target_name})
 
 # compile the dlib/all/source.cpp file into its own object just to make sure it compiles
 # set(OPTLIB_TEST_COMPILE_ALL_SOURCE_CPP ON)
