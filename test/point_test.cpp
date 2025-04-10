@@ -7,7 +7,7 @@
 using namespace OptLib;
 
 // Tests factorial of 0.
-TEST_CASE("PointTest1", "TestCtors")
+TEST_CASE("PointTest1", "[TestCtors]")
 {
     try
     {
@@ -24,7 +24,7 @@ TEST_CASE("PointTest1", "TestCtors")
     }
 }
 
-TEST_CASE("PointTest2", "TestOperators")
+TEST_CASE("PointTest2", "[TestOperators]")
 {
     Point<3> rp6{2.0, 1.0, 3.0};
     std::cout << rp6 << std::endl;
