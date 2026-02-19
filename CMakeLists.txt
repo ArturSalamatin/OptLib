@@ -28,7 +28,7 @@
 
 cmake_minimum_required(VERSION 3.14.0)
 
-# operator for solution in VS
+# project configures in .sln file
 project(OptLib
 # set the build version
     VERSION 0.1
