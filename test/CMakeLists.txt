@@ -4,6 +4,7 @@
 
 # for Catch2 and use-case
 # https://github.com/esufaev/Parallel-Operations-Toolkit
+# https://coderefinery.github.io/cmake-workshop/fetch-content/
 
 cmake_minimum_required(VERSION 3.14)
 
