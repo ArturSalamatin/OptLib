@@ -8,6 +8,7 @@
 
 cmake_minimum_required(VERSION 3.14.0)
 
+# operator for solution in VS
 project(OptLib
 # set the build version
     VERSION 0.1
@@ -16,8 +17,8 @@ project(OptLib
 
 # Specify standard ABOVE the call to add_executable
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # build CMakeLists in subdirectories
 add_subdirectory(deps/eigen)
