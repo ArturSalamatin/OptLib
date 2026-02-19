@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.14.0)
 # Every project needs a name.  We call this the "examples" project.
+# project configures in .sln file
 project(examples)
 
 # Tell cmake we will need dlib.  This command will pull in dlib and compile it
@@ -13,7 +14,7 @@ project(examples)
 macro(add_example name)
    add_executable(${name} ${name}.cpp)
   # Header files are located in the following folder.
-  # So, <optlib/xxx.h> can be called within te examples project
+  # So, <optlib/xxx.h> can be called within the examples project
   # include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
    target_include_directories(${name} PUBLIC "${PROJECT_SOURCE_DIR}/..")
 

@@ -47,6 +47,9 @@ namespace OptLib
 		template<size_t dim, typename simplex>
 		class IStateSimplex : public IState<dim>
 		{
+			using Base = IState<dim>;
+			using Base::ItsGuess;
+
 		public: // overriden from predecessor
 			
 			using func_type = FuncInterface::IFunc<dim>;
@@ -81,7 +84,7 @@ namespace OptLib
 			{ }
 			
 			IStateSimplex(SimplexVal<dim>&& State) :
-				IState{State.mean()},
+				IState<dim>{State.mean()},
 				ItsGuessDomain{State}
 			{ }
 
