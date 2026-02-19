@@ -11,11 +11,11 @@ namespace OptLib
 	template<size_t dim, typename Stream>
 	auto& operator<<(Stream& o, const Point<dim>& p)
 	{
-		static_assert(dim > 0);
+		static_assert(dim > 0ull);
 		o << "{" << p[0];
-		if constexpr (dim >1)
+		if constexpr (dim > 1ull)
 		{
-		for(size_t i = 1; i < dim; ++i)
+		for(size_t i = 1ull; i < dim; ++i)
 		{
 			o << ", " << p[i];
 		}

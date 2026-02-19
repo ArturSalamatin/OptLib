@@ -1,36 +1,31 @@
-#
-# This is a CMake makefile.  You can find the cmake utility and
-# information about it at http://www.cmake.org
-#
+# https://google.github.io/googletest/primer.html
+# https://habr.com/ru/articles/667880/
+# https://habr.com/ru/articles/119090/
 
-cmake_minimum_required(VERSION 3.14.0)
+# for Catch2 and use-case
+# https://github.com/esufaev/Parallel-Operations-Toolkit
+# https://coderefinery.github.io/cmake-workshop/fetch-content/
 
-# create a variable called target_name and set it to the string "dtest"
-set (target_name optlib_test)
-PROJECT(${target_name})
+cmake_minimum_required(VERSION 3.14)
 
-# compile the dlib/all/source.cpp file into its own object just to make sure it compiles
-# set(OPTLIB_TEST_COMPILE_ALL_SOURCE_CPP ON)
+# create a variable called project_name and set it to the string "injector_test"
+set (project_name injector_test)
+project(${project_name})
 
-include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
+# Include Catch2
+include(${CMAKE_SOURCE_DIR}/cmake/Catch2.cmake)
+# add macro with add_catch2_test definition
+include(${CMAKE_SOURCE_DIR}/cmake/AddTest.cmake)
 
-
-
+# Enable CTest
 include(CTest)
+include(Catch)
+# catch_discover_tests(tests)
 
-add_executable(point_test point_test.cpp)
-add_test(NAME point_test
-         COMMAND point_test)
+# include_directories("${CMAKE_CURRENT_SOURCE_DIR}/..") 
 
-
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG        v1.14.0
-)
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-
+# Create test executable
+add_catch2_test(point_test)
+add_catch2_test(pointval_test)
 
 

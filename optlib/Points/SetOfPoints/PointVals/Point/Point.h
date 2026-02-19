@@ -26,6 +26,7 @@ namespace OptLib
 		Point& operator=(Point&&) noexcept = default;
 		Point& operator=(const Point&) noexcept = default;
 
+		// this is to mock initializer_list
 		template<typename... Args>
 		Point(Args... a) noexcept :
 			RawPoint<dim>{a...}

@@ -52,7 +52,7 @@ namespace OptLib
 
 			auto operator()(const Point<dim> &x) const -> typename Point<dim>::value_type override
 			{
-				Point<dim>::value_type result{0.0};
+				typename Point<dim>::value_type result{0.0};
 				for (size_t i = 0; i < dim; ++i)
 				{
 					result += hessian[i][i] / 2.0 * x[i] * x[i];

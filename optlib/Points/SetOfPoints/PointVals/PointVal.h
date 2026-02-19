@@ -23,14 +23,16 @@ namespace OptLib
 
         template<typename T>
         PointVal(T&&P, double Val) : P{std::forward<T>(P)}, Val{Val}
-        {
-        }
+        { }
         
         PointVal(const Point<dim> &P, double Val) : P{P}, Val{Val}
-        {
-        }
+        { }
 
         auto operator[](size_t i) const
+        {
+            return P[i];
+        }
+        auto& operator[](size_t i)
         {
             return P[i];
         }

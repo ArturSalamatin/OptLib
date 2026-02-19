@@ -15,7 +15,11 @@ namespace OptLib
 {
 	namespace OptimizerInterface
 	{
-		template<size_t dim> // nmbr of x-params
+		template<
+				size_t dim,
+				typename algo,
+				typename state,
+				typename func> // nmbr of x-params
 		class OptimizerAlgorithm
 		{
 		public:
@@ -40,16 +44,14 @@ namespace OptLib
 				return State->IsConverged(abs_tol, rel_tol);
 			}
 
-			template<
-				typename algo,
-				typename state,
-				typename func>
 			static PointVal<dim> Proceed(
 				state* State, const func* f) 
 			{ 
 				return algo::Proceed(*State, f); 
 			}; // continue to next guess. The state is updated
 		};
+
+
 
 		// template<size_t dim, typename state>
 		// class ISimplexAlgo : public OptimizerAlgorithm<dim>
