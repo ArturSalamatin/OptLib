@@ -22,6 +22,10 @@
 # https://cliutils.gitlab.io/modern-cmake/
 # https://cmake.org/cmake/help/v3.19/index.html
 
+# to download repo with submodules
+# git clone --recurse-submodules https://github.com/ArturSalamatin/OptLib
+
+
 # to add submodule
 # git submodule add https://github.com/google/googletest deps/gtest/
 # git submodule add https://gitlab.com/libeigen/eigen deps/eigen/
