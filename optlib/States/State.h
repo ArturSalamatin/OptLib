@@ -48,6 +48,9 @@ namespace OptLib
 		class StatePoint : public StateInterface::IState<dim>
 		{
 		protected:
+			using Base = StateInterface::IState<dim>;
+			using Base::Guess;
+			using Base::ItsGuess;
 			PointVal<dim> dx{};
 		public:
 
@@ -78,6 +81,10 @@ namespace OptLib
 		template<size_t dim>
 		class StateStochastic : public StateInterface::IState<dim>
 		{
+		protected:
+			using Base = StateInterface::IState<dim>;
+			using Base::Guess;
+			using Base::ItsGuess;
 		protected:
 			double(*Temperature) (double, int);
 			int iteration;

@@ -31,6 +31,11 @@ namespace OptLib
     template <size_t count, typename pointval>
     class SetOfPointVals : public SetOfPoints<count, pointval>
     {
+    protected:
+        using Base = SetOfPoints<count, pointval>;
+        using Base::begin;
+        using Base::end;
+
     public:
         using point_type = pointval;
 
@@ -63,6 +68,10 @@ namespace OptLib
     class SetOfPointValsSort : public SetOfPointVals<count, pointval>
     {
     private:
+        using Base = SetOfPointVals<count, pointval>;
+        using Base::begin;
+        using Base::end;
+        
         void Sort() { std::sort(begin(), end()); }
 
     public:

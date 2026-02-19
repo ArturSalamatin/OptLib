@@ -4,6 +4,7 @@
 #include <array>
 #include <tuple>
 #include <algorithm>
+#include <numeric>
 
 namespace OptLib
 {

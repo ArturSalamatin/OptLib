@@ -36,9 +36,20 @@ project(OptLib
     LANGUAGES C CXX)
 
 # Specify standard ABOVE the call to add_executable
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED TRUE)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+find_package(OpenMP)
+    if (OPENMP_FOUND)
+            message(STATUS "OpenMP Found") 
+            set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+            set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+            set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
+            list(APPEND GPN_USE_LIST OPENMP) # GPN_USE_LIST may be required...
+    else()
+            message(STATUS "OpenMP NOT Found") 
+    endif()
 
 # build CMakeLists in subdirectories
 add_subdirectory(deps/eigen)

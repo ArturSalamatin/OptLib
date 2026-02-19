@@ -40,6 +40,9 @@ namespace OptLib
 				return State->IsConverged(abs_tol, rel_tol);
 			}
 
+			template<typename vvv>
+			static void Prr();
+
 			template<
 				typename algo,
 				typename state,
@@ -50,6 +53,11 @@ namespace OptLib
 				return algo::Proceed(*State, f); 
 			}; // continue to next guess. The state is updated
 		};
+
+		template<size_t dim> // nmbr of x-params
+		void OptimizerAlgorithm<dim>::Prr<int>(){}
+
+
 
 		// template<size_t dim, typename state>
 		// class ISimplexAlgo : public OptimizerAlgorithm<dim>

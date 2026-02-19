@@ -1,5 +1,4 @@
-#ifndef OVERALLOPTIMIZER_H
-#define OVERALLOPTIMIZER_H
+#pragma once
 
 #include "OptimizerInterface.h"
 
@@ -48,7 +47,8 @@ namespace OptLib
 #ifdef DEBUG_LIB
 				std::cout << "Current state: " << State->Guess() << "\n";
 #endif // DEBUG_LIB
-				OptimizerInterface::OptimizerAlgorithm<arg_count>::Proceed<algo, state, func>(State, f);
+			//	OptimizerInterface::OptimizerAlgorithm<arg_count>::Proceed/*<algo, state, func>*/<algo, state, func>(State, f);
+				OptimizerInterface::OptimizerAlgorithm<arg_count>::Prr<int>();
 				++s;
 				g = OptimizerInterface::OptimizerAlgorithm<arg_count>::IsConverged(State, tol_x(), tol_x());
 			}
@@ -94,9 +94,8 @@ namespace OptLib
 		template<typename algo>
 		PointVal<dim> Optimize()
 		{
-			OptimizerInterface::OptimizerAlgorithm<dim>::Proceed<algo, state, func>(State, f);
+			OptimizerInterface::OptimizerAlgorithm<dim>::Proceed/*<algo, state, func<dim>>*/(State, f);
 			return CurrentGuess();
 		}
 	};
 } // OptLib
-#endif
